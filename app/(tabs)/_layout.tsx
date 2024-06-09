@@ -1,9 +1,9 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import Header from '../../components/Header';
-import homeIcon from '../../assets/images/icons/home.svg';
+// import homeIcon from '../../assets/images/icons/home.svg';
 import { Cat } from '@tamagui/lucide-icons'
-import {StyleSheet, Text, View} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 
 export default function TabLayout() {
@@ -45,6 +45,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   container: {
-      backgroundColor: '#252433'
+      backgroundColor: '#FFFFFF'
   },
 });

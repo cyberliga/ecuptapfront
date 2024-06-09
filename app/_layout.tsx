@@ -6,10 +6,9 @@ import { TamaguiProvider } from 'tamagui'
 import tamaguiConfig  from '../tamagui.config'
 
 export default function Layout() {
-    const colorScheme = useColorScheme()
+  const colorScheme = useColorScheme()
 
   return (
-      <>
       <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
       <ThemeProvider value={DefaultTheme}>
         <Stack>
@@ -17,7 +16,5 @@ export default function Layout() {
         </Stack>
       </ThemeProvider>
     </TamaguiProvider>
-      </>
-
   );
 }

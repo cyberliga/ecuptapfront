@@ -1,13 +1,13 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import React, {useState} from "react";
+import { useState } from "react";
 import { Button } from 'tamagui'
 
 export default function FarmTab() {
       const FARMING_SECONDS = 10;
 
-      const [money, setMoney] = React.useState(0);
-      const [state, setState] = React.useState("not farming");
-      const [lastActivity, setLastActivity] = React.useState(new Date());
+      const [money, setMoney] = useState(0);
+      const [state, setState] = useState("not farming");
+      const [lastActivity, setLastActivity] = useState(new Date());
       const [date, setDate] = useState("")
 
       const userData = {
@@ -73,8 +73,11 @@ export default function FarmTab() {
 
       return (
           <View style={styles.container}>
-            <Text style={styles.text}>E-coins {money}</Text>
-            <Image source={require("../../assets/images/Vector.svg")}></Image>
+            <Text style={styles.text}>
+              <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+                {money}
+            </Text>
+            <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
               {state === "farm" ? (
                         <Button disabled={!farmingIsEnd? true : false} onPress={handleClaimClick} style={styles.button} backgroundColor="green" theme="active">{date} Claim {DifferentSeconds()} E-Coins</Button>
                   ) : (
@@ -88,7 +91,7 @@ export default function FarmTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#252433',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
@@ -103,10 +106,12 @@ const styles = StyleSheet.create({
         opacity: 0.8
     },
   text: {
-      color: 'white',
-      fontSize: 28,
-      fontFamily: 'DIN',
-      fontWeight: '500',
+      display: 'flex',
+      gap: 10,
+      alignItems: 'flex-start',
+      color: '#000000',
+      fontSize: 32,
+      fontWeight: '800',
       margin: 0,
-  }
+  },
 });
