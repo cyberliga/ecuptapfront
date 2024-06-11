@@ -1,35 +1,54 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useCallback, useEffect } from "react";
+import { View, Text, StyleSheet, Image , Animated, TouchableOpacity} from 'react-native';
+import { useState, useCallback, useEffect, useRef } from "react";
 import { Button, ButtonText, ButtonContext } from 'tamagui'
-import { useShowPopup } from '@vkruglikov/react-telegram-web-app';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
-
-
 export default function FarmTab() {
+  const [date, setDate] = useState("")
+  const [Finishdate, setFinishDate] = useState("")
+  const [startFarmDate, setStartFarmDate] = useState("")
+
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
   });
+
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded, fontError]);
 
-  const [date, setDate] = useState("")
-  const [Finishdate, setFinishDate] = useState("")
-  const [startFarmDate, setStartFarmDate] = useState("")
-
   const userData = {
     "username": "john_doe",
     "total_amount_of_coins": 100,
-    "start": "2024-06-10T06:02:36.772189+00:00",
-    "finish": "2024-06-10T18:22:50.140787Z",
+    "start": "2024-06-11T06:02:36.772189+00:00",
+    "finish": "2024-06-12T18:22:50.140787Z",
     "rate_per_hour": 2 * 60 * 60
   }
 
   const [money, setMoney] = useState(userData.total_amount_of_coins);
+
+  function calculatePercentage(startDate: string, endDate: string) {
+    const start: number = new Date(startDate).getTime();
+    const end: number = new Date(endDate).getTime();
+    const now : number = new Date().getTime();
+
+    if (now < start) {
+        return 0;
+    }
+    if (now > end) {
+        return 100;
+    }
+    return ( now - start / (end - start)) * 100;
+}
+const percentageData = calculatePercentage(userData.start , userData.finish);
+const [progress, setProgress] = useState(new Animated.Value(percentageData));
+
+const progressBarWidth = progress.interpolate({
+  inputRange: [0, 1],
+  outputRange: ['10%', '100%']
+});
 
   // const getUser = async () => {
   //   try {
@@ -173,8 +192,15 @@ export default function FarmTab() {
       {startFarmDate === "" ? (
         <Button onPress={setStartFarm} style={styles.button}>{<ButtonText style={styles.button_text}>Start farming</ButtonText>}</Button>
       ) : (
-        <Button disabled={!farmingIsEnd ? true : false} onPress={handleClaimClick} style={styles.button} >{date} Claim {claimedTotalCurrent()} E-Coins</Button>
+        // <Button disabled={!farmingIsEnd ? true : false} onPress={handleClaimClick} style={styles.button} >{date} Claim {claimedTotalCurrent()} E-Coins</Button>
+        <TouchableOpacity style={styles.button} disabled={!farmingIsEnd ? true : false}  onPress={handleClaimClick} >
+          <View style={styles.progressContainer}>
+              <Animated.View style={[styles.progressBar, { width: progressBarWidth }]} />
+              <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()} E-Coins</Text>
+          </View>
+        </TouchableOpacity>
       )}
+     
     </View>
   );
 }
@@ -192,11 +218,10 @@ const styles = StyleSheet.create({
     width: 350,
     height: 62,
     borderRadius: 10,
-    borderWidth: 2,
+    borderWidth: 0,
     cursor: "pointer",
     opacity: 0.8,
     backgroundColor: "#BFFF97",
-
   },
   button_text: {
     color: "#1C4532",
@@ -214,5 +239,20 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     margin: 0,
+  },
+  progressContainer: {
+      width: '100%',
+      height: '100%',
+      position: 'relative',
+      justifyContent: 'center',
+      alignItems: 'center',
+  },
+  progressBar: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      bottom: 0,
+      backgroundColor: '#bb86fc',
+      borderRadius: 5,
   },
 });

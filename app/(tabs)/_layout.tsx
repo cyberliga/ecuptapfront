@@ -1,10 +1,6 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
+import { StyleSheet, Image, View } from "react-native";
 import Header from '../../components/Header';
-// import homeIcon from '../../assets/images/icons/home.svg';
-import { Cat } from '@tamagui/lucide-icons'
-import { StyleSheet, Text, View } from "react-native";
-
 
 export default function TabLayout() {
   return (
@@ -12,13 +8,21 @@ export default function TabLayout() {
       <View style={styles.container}>
         <Header />
       </View>
-      <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+      <Tabs screenOptions={{ tabBarActiveTintColor: '#979BFF' }}>
         <Tabs.Screen
           name="index"
           options={{
             title: 'Farm',
             headerShown: false,
-            tabBarIcon: ({ color }) => <Cat color={color} />,
+            tabBarIcon: ({ color }) => <Image style={{ tintColor: color}} source={require('../../assets/images/icons/homeIcon.svg')}/>,
+          }}
+        />
+         <Tabs.Screen
+          name="tasks"
+          options={{
+            title: 'Tasks',
+            headerShown: false,
+            tabBarIcon: ({ color }) => <Image style={{ tintColor: color}}  source={require('../../assets/images/icons/tasksIcon.svg')}/>,
           }}
         />
         <Tabs.Screen
@@ -26,17 +30,9 @@ export default function TabLayout() {
           options={{
             title: 'Friends',
             headerShown: false,
-            tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
+            tabBarIcon: ({ color }) => <Image style={{ tintColor: color}}  source={require('../../assets/images/icons/friendsIcon.svg')}/>,
           }}
         />
-        {/* <Tabs.Screen
-                name="tasks"
-                options={{
-                    title: 'Tasks',
-                    headerShown: false,
-                    tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,
-                }}
-              /> */}
       </Tabs>
     </>
   );
