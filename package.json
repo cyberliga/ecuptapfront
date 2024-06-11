@@ -21,7 +21,6 @@
     "@tamagui/babel-plugin": "^1.100.3",
     "@tamagui/config": "^1.100.3",
     "@tamagui/lucide-icons": "^1.100.3",
-    "@vkruglikov/react-telegram-web-app": "^2.1.9",
     "expo": "~51.0.11",
     "expo-asset": "^10.0.8",
     "expo-dev-client": "~4.0.15",

@@ -1,9 +1,10 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button, ButtonText, ButtonContext } from 'tamagui'
 import { useShowPopup } from '@vkruglikov/react-telegram-web-app';
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
+
 
 
 export default function FarmTab() {
@@ -30,43 +31,75 @@ export default function FarmTab() {
 
   const [money, setMoney] = useState(userData.total_amount_of_coins);
 
-  const getUser = async () => {
-    try {
-      const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/get-user-info/john_doe');
-      if (!response.ok) {
-        const showPopup = useShowPopup();
-        showPopup({ message: 'Hello, I am popup' })
-      }
-      const json = await response.json();
+  // const getUser = async () => {
+  //   try {
+  //     const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/get-user-info/john_doe', {
+  //       mode: 'no-cors',
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         "Access-Control-Allow-Origin": "*",
+  //       }
+  //     });
 
-      setMoney(json["total_amount_of_coins"])
-      setStartFarmDate(json["start"])
-      setFinishDate(json["finish"])
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //     console.log(response)
+  //     if (!response.ok) {
+  //       const showPopup = useShowPopup();
+  //       showPopup({ message: 'Hello, I am popup' })
+  //     }
+  //     const json = await response.json();
+
+  //     setMoney(json["total_amount_of_coins"])
+  //     setStartFarmDate(json["start"])
+  //     setFinishDate(json["finish"])
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  const getUser = () => {
+    const [allowances, setAllowances] = useState([]);
+
+    useEffect(() => {
+      fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/get-user-info/john_doe', { mode: "no-cors" })
+        .then(data => {
+          console.log(data)
+          return data.json();
+        })
+        .then(data => {
+          setAllowances(data);
+        })
+        .catch(err => {
+          console.log(123123);
+        });
+    }, []);
+  }
+
+  const user = getUser()
+  console.log(user)
 
   const setStartFarm = () => {
-    // const response = async () => {
-    //   try {
-    //     const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/claim/start/john_doe', {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json"
-    //       }
-    //     });
-    //     if (!response.ok) {
-    //       // показать уведомление
-    //     }
-    //     const json = await response.json();
-    //     setStartFarmDate(new Date())
-    //   } catch (error) {
-    //     console.error(error);
-    //   }
-    // };
+    const response = async () => {
+      try {
+        const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/claim/start/john_doe', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+          }
+        });
+        if (!response.ok) {
+          // показать уведомление
+        }
+        const json = await response.json();
+        console.log(json)
+
+        // setStartFarmDate(new Date())
+      } catch (error) {
+        console.error(error);
+      }
+    };
     setStartFarmDate(new Date().toISOString())
   }
+  getUser()
 
   const handleClaimClick = () => {
     setStartFarmDate("")
@@ -102,7 +135,6 @@ export default function FarmTab() {
   const claimedTotalCurrent = () => {
     return ((new Date().getTime() - new Date(startFarmDate).getTime()) / 1000) * userData.rate_per_hour / 60 / 60
   }
-
 
   function startCountdown(seconds: number) {
     let remainingSeconds = seconds;

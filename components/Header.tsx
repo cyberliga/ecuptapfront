@@ -1,13 +1,11 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useInitData } from "@vkruglikov/react-telegram-web-app"
 
 export default function Header() {
-    const [initDataUnsafe] = useInitData();
-    console.log(initDataUnsafe)
+    var tg = require('@/assets/js/telegram-web-app')
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/images/avatars/avatar1.svg")} />
-            <Text style={styles.text}>{initDataUnsafe ? initDataUnsafe.user?.username : "Username"}</Text>
+            <Text style={styles.text}>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</Text>
         </View>
 
     );
