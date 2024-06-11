@@ -23,9 +23,9 @@ export default function FarmTab() {
 
   const userData = {
     "username": "john_doe",
-    "total_amount_of_coins": 150,
+    "total_amount_of_coins": 100,
     "start": "2024-06-10T06:02:36.772189+00:00",
-    "finish": "2024-06-10T15:22:50.140787Z",
+    "finish": "2024-06-10T18:22:50.140787Z",
     "rate_per_hour": 2 * 60 * 60
   }
 
@@ -125,7 +125,7 @@ export default function FarmTab() {
   }
 
 
-  const SecondsForFarm = () => {
+  const secondsForFarm = () => {
     const currentSecondsTime = new Date().getTime();
     const secondsFarm = (new Date(userData.finish).getTime() - currentSecondsTime) / 1000;
 
@@ -159,7 +159,7 @@ export default function FarmTab() {
     return `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs} `;
   }
 
-  startCountdown(SecondsForFarm());
+  startCountdown(secondsForFarm());
 
   const farmingIsEnd = new Date(userData.finish).getTime() <= new Date().getTime();
 
