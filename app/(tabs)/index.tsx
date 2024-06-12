@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, ImageStyle } from 'react-native';
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Button, ButtonText, ButtonContext } from 'tamagui'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -8,18 +8,22 @@ import * as SplashScreen from 'expo-splash-screen';
 export default function FarmTab() {
   require('@/assets/js/telegram-web-app')
 
-  const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user
-  const userData = {
-    "username": "john_doe",
-    "total_amount_of_coins": 100,
-    "start": new Date().getTime(),
-    "finish": new Date().getTime() + 100000,
-    "rate_per_hour": 2 * 60 * 60
-  }
+  const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+  const userData =  useMemo(() => (
+    {
+      "username": "john_doe",
+      "total_amount_of_coins": 100,
+      // "start": "2024-01-01T00:00:00",
+      // "finish": "2024-12-31T23:59:59",
+      "start": new Date().getTime(),
+      "finish": new Date().getTime() + 100000,
+      "rate_per_hour": 2 * 60 * 60
+    }
+  ), [])
 
   const [date, setDate] = useState("")
-  const [finishdate, setFinishDate] = useState(userData.finish)
-  const [startFarmDate, setStartFarmDate] = useState(userData.start)
+  const [finishdate, setFinishDate] = useState(userData.finish);
+  const [startFarmDate, setStartFarmDate] = useState(userData.start);
   const [money, setMoney] = useState(userData.total_amount_of_coins);
 
   const [fontsLoaded, fontError] = useFonts({
@@ -34,9 +38,9 @@ export default function FarmTab() {
 
 
   function calculatePercentage(startDate: number, endDate: number) {
-    const start: number = new Date(startDate).getTime();
-    const end: number = new Date(endDate).getTime();
-    const now: number = new Date().getTime();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const now = new Date();
 
     if (now < start) {
       return 0;
@@ -44,14 +48,20 @@ export default function FarmTab() {
     if (now > end) {
       return 100;
     }
-    return (now - start / (end - start)) * 100;
+
+    const totalDuration = end.getTime() - start.getTime();
+    const elapsedDuration = now.getTime() - start.getTime();
+    
+
+    const percentage = +((elapsedDuration / totalDuration) * 100).toFixed(0) / 100;
+    return percentage ;
   }
   const percentageData = calculatePercentage(userData.start, userData.finish);
-  const [progress, setProgress] = useState(new Animated.Value(percentageData));
+  const [progress, setProgress] = useState(new Animated.Value(+percentageData));
 
   const progressBarWidth = progress.interpolate({
     inputRange: [0, 1],
-    outputRange: ['10%', '100%']
+    outputRange: ['0%', '100%']
   });
 
   const getUser = async () => {
@@ -62,7 +72,6 @@ export default function FarmTab() {
           "Content-Type": "application/json"
         }
       });
-
       console.log(response)
       if (!response.ok) {
         console.log("ne ok")
@@ -82,7 +91,6 @@ export default function FarmTab() {
       console.error(error);
     }
   };
-
   const handleClaimClick = () => {
 
     // const response = async () => {
@@ -106,13 +114,10 @@ export default function FarmTab() {
     // new_data = response.json()
 
     // mock data
-    const farming_value = ((new Date().getTime() - startFarmDate) / 1000) * userData.rate_per_hour / 60 / 60
-    const new_money_value = money + farming_value
+    const farming_value = ((new Date().getTime() - startFarmDate) / 1000) * userData.rate_per_hour / 60 / 60;
+    const new_money_value = money + farming_value;
     setStartFarmDate(new Date().getTime())
     setFinishDate(new Date().getTime() + 100000)
-    console.log(startFarmDate)
-    console.log(finishdate)
-
     setMoney(new_money_value);
   }
 
@@ -161,18 +166,33 @@ export default function FarmTab() {
         {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
+      {/* <TouchableOpacity style={styles.button}  >
+        <View style={styles.progressContainer}>
+          <Animated.View style={[styles.progressBar, { width: progressBarWidth }]} />
+          <Button >
+              <Text style={styles.button_text}>{date} Claim
+                <Image style={{
+                  height: 12,
+                  width: 12,
+                }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+              </Text>
+            </Button>
+        </View>
+      </TouchableOpacity> */}
       <TouchableOpacity style={styles.button} onPress={handleClaimClick} >
         <View style={styles.progressContainer}>
           <Animated.View style={[styles.progressBar, { width: progressBarWidth }]} />
           <Button onPress={handleClaimClick}>
-            <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
-              <Image style={{
-                height: 12,
-                width: 12,
-              }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
-            </Text></Button>
+              <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
+                <Image style={{
+                  height: 12,
+                  width: 12,
+                }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+              </Text>
+            </Button>
         </View>
       </TouchableOpacity>
+
     </View>
   );
 }
@@ -227,3 +247,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 });
+
+declare global {
+  interface Window {
+      Telegram: any;
+  }
+}

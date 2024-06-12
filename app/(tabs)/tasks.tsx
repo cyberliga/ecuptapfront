@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Button } from 'tamagui'
 
 export default function TasksTab() {
     const dataTasks = [
@@ -6,46 +7,43 @@ export default function TasksTab() {
             title: 'Subscribe to ECUP.PRO Telegram',
             score: 1000,
             done: false,
-            image: require('../../assets/images/icons/homeIcon.svg'),
         },
         {
             title: 'Join ECUP’s Discord',
             score: 200,
             done: false,
-            image: require('../../assets/images/icons/homeIcon.svg'),
         },
         {
             title: 'Invite 5 friends',
             score: 1000,
             done: false,
-            image: require('../../assets/images/icons/homeIcon.svg'),
         },
     ]
     return (
         <View style={styles.container}>
-        <Text style={styles.title}>
-            Tasks
-        </Text>
-        <Text style={styles.subTitle}>
-            Earn more coins by doing tasks
-        </Text>
-        {dataTasks.map((item, index)=> (
-            <View key={index}  style={styles.tasksContainer}>
-                <View>
-                    <Image source={item.image} />
-                    <View>
-                        <Text>{item.title}</Text>
-                        <Text>{item.score}</Text>
+            <Text style={styles.title}>
+                Tasks
+            </Text>
+            <Text style={styles.subTitle}>
+                Earn more coins by doing tasks
+            </Text>
+            <View style={styles.tasksWrapper}>
+                {dataTasks.map((item, index)=> (
+                    <View key={index}  style={styles.tasksContainer}>
+                        <View>
+                            <Text style={styles.taskDescrTitle}>
+                                {item.title}
+                            </Text>
+                            <Text  style={styles.taskDescrScore}>
+                                <span style={styles.taskDescrScoreSpan}>+</span>{item.score}E
+                            </Text>
+                        </View>
+                        <Button style={styles.taskButton}> 
+                            Claim
+                        </Button>
                     </View>
-                    <Button title=''>
-
-                    </Button>
-                </View>
-
+                ))}
             </View>
-        ))
-
-        }
         </View>
     );
 }
@@ -55,8 +53,6 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 20,
         display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'center',
         alignItems: 'center',
         gap: 18,
         backgroundColor: '#FFFFFF',
@@ -76,16 +72,35 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter',
     },
     tasksContainer: {
-        marginTop: 20,
+        width: 350,
         display: 'flex',
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    }, 
+    tasksWrapper: {
+        borderTopColor: '#EBEBEB',
+        borderTopWidth: 1,
+        paddingTop: 50,
+        display: 'flex',
         gap: 18,
+    },
+    taskDescrTitle: {
+        fontWeight: 500,
+        fontSize: 14,
+        color: '#000000',
+    },
+    taskDescrScoreSpan: {
+        fontWeight: 500,
+        fontSize: 12,
+        color: '#000000',
+    },
+    taskDescrScore: {
+        fontWeight: 500,
+        fontSize: 12,
+        color: '#979BFF',
+    },
+    taskButton: {
+        backgroundColor: "#BFFF97",
+        borderRadius: 25,
     }
 });
-
-declare global {
-    interface Window {
-        Telegram: any;
-    }
-  }
