@@ -1,13 +1,26 @@
-import { View, Text, StyleSheet, Image , Animated, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Animated, ImageStyle } from 'react-native';
 import { useState, useCallback, useEffect, useRef } from "react";
 import { Button, ButtonText, ButtonContext } from 'tamagui'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
+
 export default function FarmTab() {
+  require('@/assets/js/telegram-web-app')
+
+  const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user
+  const userData = {
+    "username": "john_doe",
+    "total_amount_of_coins": 100,
+    "start": new Date().getTime(),
+    "finish": new Date().getTime() + 100000,
+    "rate_per_hour": 2 * 60 * 60
+  }
+
   const [date, setDate] = useState("")
-  const [Finishdate, setFinishDate] = useState("")
-  const [startFarmDate, setStartFarmDate] = useState("")
+  const [finishdate, setFinishDate] = useState(userData.finish)
+  const [startFarmDate, setStartFarmDate] = useState(userData.start)
+  const [money, setMoney] = useState(userData.total_amount_of_coins);
 
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
@@ -19,110 +32,59 @@ export default function FarmTab() {
     }
   }, [fontsLoaded, fontError]);
 
-  const userData = {
-    "username": "john_doe",
-    "total_amount_of_coins": 100,
-    "start": "2024-06-11T06:02:36.772189+00:00",
-    "finish": "2024-06-12T18:22:50.140787Z",
-    "rate_per_hour": 2 * 60 * 60
-  }
 
-  const [money, setMoney] = useState(userData.total_amount_of_coins);
-
-  function calculatePercentage(startDate: string, endDate: string) {
+  function calculatePercentage(startDate: number, endDate: number) {
     const start: number = new Date(startDate).getTime();
     const end: number = new Date(endDate).getTime();
-    const now : number = new Date().getTime();
+    const now: number = new Date().getTime();
 
     if (now < start) {
-        return 0;
+      return 0;
     }
     if (now > end) {
-        return 100;
+      return 100;
     }
-    return ( now - start / (end - start)) * 100;
-}
-const percentageData = calculatePercentage(userData.start , userData.finish);
-const [progress, setProgress] = useState(new Animated.Value(percentageData));
-
-const progressBarWidth = progress.interpolate({
-  inputRange: [0, 1],
-  outputRange: ['10%', '100%']
-});
-
-  // const getUser = async () => {
-  //   try {
-  //     const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/get-user-info/john_doe', {
-  //       mode: 'no-cors',
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         "Access-Control-Allow-Origin": "*",
-  //       }
-  //     });
-
-  //     console.log(response)
-  //     if (!response.ok) {
-  //       const showPopup = useShowPopup();
-  //       showPopup({ message: 'Hello, I am popup' })
-  //     }
-  //     const json = await response.json();
-
-  //     setMoney(json["total_amount_of_coins"])
-  //     setStartFarmDate(json["start"])
-  //     setFinishDate(json["finish"])
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  const getUser = () => {
-    const [allowances, setAllowances] = useState([]);
-
-    useEffect(() => {
-      fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/get-user-info/john_doe', { mode: "no-cors" })
-        .then(data => {
-          console.log(data)
-          return data.json();
-        })
-        .then(data => {
-          setAllowances(data);
-        })
-        .catch(err => {
-          console.log(123123);
-        });
-    }, []);
+    return (now - start / (end - start)) * 100;
   }
+  const percentageData = calculatePercentage(userData.start, userData.finish);
+  const [progress, setProgress] = useState(new Animated.Value(percentageData));
 
-  const user = getUser()
-  console.log(user)
+  const progressBarWidth = progress.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['10%', '100%']
+  });
 
-  const setStartFarm = () => {
-    const response = async () => {
-      try {
-        const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/claim/start/john_doe', {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-          }
-        });
-        if (!response.ok) {
-          // показать уведомление
+  const getUser = async () => {
+    const tg_username = tg_user.username ? tg_user : "localuser"
+    try {
+      const response = await fetch(`https://etuqx2c3vf.execute-api.us-east-1.amazonaws.com/users/${tg_username}`, {
+        headers: {
+          "Content-Type": "application/json"
         }
-        const json = await response.json();
-        console.log(json)
+      });
 
-        // setStartFarmDate(new Date())
-      } catch (error) {
-        console.error(error);
+      console.log(response)
+      if (!response.ok) {
+        console.log("ne ok")
+        const json = userData
+        setMoney(json["total_amount_of_coins"])
+        setStartFarmDate(new Date().getTime())
+        setFinishDate(new Date().getTime() + 10000)
       }
-    };
-    setStartFarmDate(new Date().toISOString())
-  }
-  getUser()
+      const json = response.json()
+      console.log(json)
+
+      // setMoney(json["total_amount_of_coins"])
+      // setStartFarmDate(json.start * 1000)
+      // setFinishDate(json.finish * 1000)
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleClaimClick = () => {
-    setStartFarmDate("")
-    setMoney(userData.total_amount_of_coins);
+
     // const response = async () => {
     //   try {
     //     const response = await fetch('https://g6r44q47m1.execute-api.us-east-1.amazonaws.com/claime/finish/john_doe', {
@@ -141,21 +103,33 @@ const progressBarWidth = progress.interpolate({
     //     console.error(error);
     //   }
     // };
-  }
+    // new_data = response.json()
 
+    // mock data
+    const farming_value = ((new Date().getTime() - startFarmDate) / 1000) * userData.rate_per_hour / 60 / 60
+    const new_money_value = money + farming_value
+    setStartFarmDate(new Date().getTime())
+    setFinishDate(new Date().getTime() + 100000)
+    console.log(startFarmDate)
+    console.log(finishdate)
+
+    setMoney(new_money_value);
+  }
 
   const secondsForFarm = () => {
     const currentSecondsTime = new Date().getTime();
-    const secondsFarm = (new Date(userData.finish).getTime() - currentSecondsTime) / 1000;
+    const secondsFarm = (finishdate - currentSecondsTime) / 1000;
 
     return Math.floor(secondsFarm);
   }
 
   const claimedTotalCurrent = () => {
-    return ((new Date().getTime() - new Date(startFarmDate).getTime()) / 1000) * userData.rate_per_hour / 60 / 60
+    // calculate how tokens farm user right now
+    return (((new Date().getTime() - startFarmDate) / 1000) * userData.rate_per_hour / 60 / 60).toFixed(3)
   }
 
   function startCountdown(seconds: number) {
+    // start timer
     let remainingSeconds = seconds;
 
     const interval = setInterval(() => {
@@ -180,8 +154,6 @@ const progressBarWidth = progress.interpolate({
 
   startCountdown(secondsForFarm());
 
-  const farmingIsEnd = new Date(userData.finish).getTime() <= new Date().getTime();
-
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
@@ -189,18 +161,18 @@ const progressBarWidth = progress.interpolate({
         {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
-      {startFarmDate === "" ? (
-        <Button onPress={setStartFarm} style={styles.button}>{<ButtonText style={styles.button_text}>Start farming</ButtonText>}</Button>
-      ) : (
-        // <Button disabled={!farmingIsEnd ? true : false} onPress={handleClaimClick} style={styles.button} >{date} Claim {claimedTotalCurrent()} E-Coins</Button>
-        <TouchableOpacity style={styles.button} disabled={!farmingIsEnd ? true : false}  onPress={handleClaimClick} >
-          <View style={styles.progressContainer}>
-              <Animated.View style={[styles.progressBar, { width: progressBarWidth }]} />
-              <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()} E-Coins</Text>
-          </View>
-        </TouchableOpacity>
-      )}
-     
+      <TouchableOpacity style={styles.button} onPress={handleClaimClick} >
+        <View style={styles.progressContainer}>
+          <Animated.View style={[styles.progressBar, { width: progressBarWidth }]} />
+          <Button onPress={handleClaimClick}>
+            <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
+              <Image style={{
+                height: 12,
+                width: 12,
+              }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+            </Text></Button>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -229,7 +201,6 @@ const styles = StyleSheet.create({
     fontWeight: 600,
     fontFamily: "Inter-Black",
     lineHeight: 27
-
   },
   text: {
     display: 'flex',
@@ -241,18 +212,18 @@ const styles = StyleSheet.create({
     margin: 0,
   },
   progressContainer: {
-      width: '100%',
-      height: '100%',
-      position: 'relative',
-      justifyContent: 'center',
-      alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   progressBar: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      bottom: 0,
-      backgroundColor: '#bb86fc',
-      borderRadius: 5,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    bottom: 0,
+    backgroundColor: '#bb86fc',
+    borderRadius: 5,
   },
 });
