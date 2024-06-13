@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 
 export default function Header() {
-    var tg = require('@/assets/js/telegram-web-app')
+    require('@/assets/js/telegram-web-app')
     return (
         <View style={styles.container}>
             <Image style={styles.image} source={require("../assets/images/avatars/avatar1.svg")} />

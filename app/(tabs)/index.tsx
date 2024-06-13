@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useMemo, useEffect } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 
 
 interface userProps {
@@ -51,6 +52,12 @@ export default function FarmTab() {
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
   });
 
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded || fontError) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded, fontError]);
 
   const handleClaimClick = async () => {
     const response = await fetch(`https://9l5i5ge0o9.execute-api.us-east-1.amazonaws.com/users/${tg_user_id}/claim-farmed-coins`, {
@@ -106,26 +113,23 @@ export default function FarmTab() {
     return formattedTime;
   }
 
-  const timer = () => startCountdown(secondsForFarm());
-
+  startCountdown(secondsForFarm());
 
   return (
-    <View style={styles.container}>
+    <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
         <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} />
         {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
-      <View style={styles.progressContainer}>
-        <Button style={styles.button} onPress={handleClaimClick}>
-          <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
-            <Image style={{
-              height: 12,
-              width: 12,
-            }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
-          </Text>
-        </Button>
-      </View>
+      <Button style={styles.button} onPress={handleClaimClick}>
+        <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
+          <Image style={{
+            height: 12,
+            width: 12,
+          }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+        </Text>
+      </Button>
 
     </View>
   );
@@ -164,13 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     margin: 0,
-  },
-  progressContainer: {
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
 
