@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -25,7 +25,9 @@ export default function FarmTab() {
   const [startFarmDate, setStartFarmDate] = useState(0);
   const [money, setMoney] = useState(0);
   const [ratePerHour, setRatePerHour] = useState(0);
-
+  const [fontsLoaded, fontError] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
+  });
   useEffect(() => {
     const getUserFunc = async () => {
       const response = await fetch(`https://9l5i5ge0o9.execute-api.us-east-1.amazonaws.com/users/${tg_user_id}`, {
@@ -33,9 +35,7 @@ export default function FarmTab() {
         headers: {
           "Content-Type": "application/json"
         }
-      }
-      )
-
+      })
       response.json().then((res: userProps) => {
         setStartFarmDate(res.farm_start)
         setFinishDate(res.farm_finish)
@@ -46,12 +46,6 @@ export default function FarmTab() {
 
     getUserFunc()
   }, [tg_user_id])
-
-
-  const [fontsLoaded, fontError] = useFonts({
-    'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
-  });
-
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
@@ -66,7 +60,6 @@ export default function FarmTab() {
         "Content-Type": "application/json"
       }
     });
-
     response.json().then((res: userProps) => {
       setStartFarmDate(res.farm_start)
       setFinishDate(res.farm_finish)
@@ -77,7 +70,6 @@ export default function FarmTab() {
   const secondsForFarm = () => {
     const currentSecondsTime = new Date().getTime() / 1000;
     const secondsFarm = (finishdate - currentSecondsTime);
-
     return Math.floor(secondsFarm);
   }
 
@@ -85,11 +77,11 @@ export default function FarmTab() {
     // calculate how tokens farm user right now
     return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
   }
-
-  function startCountdown(seconds: number) {
+  const claimedTotalCurrentValue = claimedTotalCurrent();
+  
+  const startCountdown = (seconds: number) => {
     // start timer
     let remainingSeconds = seconds;
-
     const interval = setInterval(() => {
       if (remainingSeconds >= 0) {
         formatTime(remainingSeconds);
@@ -100,34 +92,28 @@ export default function FarmTab() {
     }, 1000);
   }
 
-  function formatTime(seconds: number) {
+  const formatTime = (seconds: number) =>  {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const secs = seconds % 60;
-
-    // Only update if the formatted time has changed
-    // добавить use memo тоже?
     const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs} `;
     setDate(formattedTime);
-
     return formattedTime;
   }
-
   startCountdown(secondsForFarm());
 
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
-        <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+        <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight:10}} />
         {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
-        <Text style={styles.button_text}>{date} Claim {claimedTotalCurrent()}
-          <Image style={{
-            height: 12,
-            width: 12,
-          }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+        <Text style={styles.button_text}> Farming  <Image style={{height: 15,width: 10, marginLeft: 5}} 
+              source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+          {claimedTotalCurrentValue}
+         <span style={styles.buttonTextSpan}>{date}</span>
         </Text>
       </Button>
 
@@ -154,6 +140,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#BFFF97",
   },
   button_text: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 5,
     color: "#1C4532",
     fontSize: 18,
     fontWeight: 600,
@@ -161,14 +150,17 @@ const styles = StyleSheet.create({
     lineHeight: 27
   },
   text: {
-    display: 'flex',
-    gap: 10,
     alignItems: 'flex-start',
     color: '#000000',
     fontSize: 32,
     fontWeight: '800',
     margin: 0,
   },
+  buttonTextSpan: {
+    fontSize: 14,
+    position: 'absolute',
+    right: -95,
+  }
 });
 
 declare global {

@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'tamagui'
 
 export default function TasksTab() {
@@ -29,17 +29,25 @@ export default function TasksTab() {
             </Text>
             <View style={styles.tasksWrapper}>
                 {dataTasks.map((item, index)=> (
-                    <View key={index}  style={styles.tasksContainer}>
-                        <View>
+                    <View key={index} style={styles.tasksContainer}>
+                        <View style={{display: 'flex', gap: 5}}>
                             <Text style={styles.taskDescrTitle}>
                                 {item.title}
                             </Text>
-                            <Text  style={styles.taskDescrScore}>
-                                <span style={styles.taskDescrScoreSpan}>+</span>{item.score}E
+                            <Text style={styles.taskDescrScore}>
+                                <span style={styles.taskDescrScoreSpan}>+ </span>{item.score}{` `}
+                                <Image style={{
+                                    height: 12,
+                                    width: 7,
+                                    tintColor: '#979BFF'
+                                }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
                             </Text>
                         </View>
-                        <Button style={styles.taskButton}> 
+                        {/* <Button style={styles.taskButton}> 
                             Claim
+                        </Button> */}
+                        <Button style={styles.taskButtonClaimed} disabled> 
+                            Claimed
                         </Button>
                     </View>
                 ))}
@@ -82,7 +90,7 @@ const styles = StyleSheet.create({
         borderTopWidth: 1,
         paddingTop: 50,
         display: 'flex',
-        gap: 18,
+        gap: 26,
     },
     taskDescrTitle: {
         fontWeight: 500,
@@ -102,5 +110,11 @@ const styles = StyleSheet.create({
     taskButton: {
         backgroundColor: "#BFFF97",
         borderRadius: 25,
+    },
+    taskButtonClaimed: {
+        borderRadius: 25,
+        backgroundColor: '#FFFFFF',
+        borderColor: '#000000',
+        borderTopWidth: 1,
     }
 });

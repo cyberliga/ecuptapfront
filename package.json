@@ -17,6 +17,7 @@
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-clipboard/clipboard": "^1.14.1",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/babel-plugin": "^1.100.3",
     "@tamagui/config": "^1.100.3",
