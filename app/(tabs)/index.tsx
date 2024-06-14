@@ -1,16 +1,17 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useCallback, useEffect, useMemo } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 
 import { getQuery } from "@/app/api/hooks/getQuery"
-import { claimedTotalCurrent, } from '@/app/api/utils'
+import { claimedTotalCurrent } from '@/app/api/utils'
 
 import User from "@/app/api/schema"
 
 import Timer from "@/components/Timer"
+import FarmButton from '@/components/Buttons/FarmButton';
 
 
 
@@ -71,7 +72,8 @@ export default function FarmTab() {
           {claimedTotal}
         </Text>
       </Button>
-
+      {/* проблему описал внутри компонента FarmButton */}
+      {/* <FarmButton /> */}
     </View>
   );
 }

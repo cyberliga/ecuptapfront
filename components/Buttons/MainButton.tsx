@@ -10,7 +10,6 @@ interface ButtonSize {
 type ButtonProps = {
     size: ButtonSize,
     onClickHandler: any,
-    сhildrens: ReactNode[]
 
 }
 
@@ -19,11 +18,7 @@ export default function MainButton(props: ButtonProps) {
     styles.button.height = props.size.height
 
     return (
-        <Button style={styles.button} onPress={props.onClickHandler}>
-            {props.сhildrens.map((children) => {
-                children
-            })}
-        </Button>
+        <Button style={styles.button} onPress={props.onClickHandler}></Button>
     )
 }
 
