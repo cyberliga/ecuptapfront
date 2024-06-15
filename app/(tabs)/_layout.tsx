@@ -19,7 +19,8 @@ export default function TabLayout() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    const response = getQuery<User>({ path: `/users/${tg_user_id}` });
+    // const response = getQuery<User>({ path: `/users/${tg_user_id}` });
+    const response = getQuery<User>({ path: `/users/basicscode` });
     setLoading(true);
     response.then((res) => {
      if(res.message) {
@@ -38,7 +39,7 @@ export default function TabLayout() {
   return (
     <> 
       {loading ? <Loader /> 
-        : error ? <Erorr />
+        : !error ? <Erorr />
         : (
           <>
           <View style={styles.container}>
@@ -46,7 +47,7 @@ export default function TabLayout() {
             </View>
             <Tabs screenOptions={{ tabBarActiveTintColor: '#979BFF' }}>
                 <Tabs.Screen
-                  name="farm"
+                  name="index"
                   options={{
                     title: 'Farm',
                     headerShown: false,

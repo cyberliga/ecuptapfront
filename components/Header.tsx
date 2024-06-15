@@ -1,7 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 // import { Carousels } from './Carousels/Carousesl';
 
-
 export default function Header() {
     require('@/assets/js/telegram-web-app')
 
@@ -11,7 +10,6 @@ export default function Header() {
             <Image style={styles.image} source={require("@/assets/images/avatars/avatar1.svg")} />
             <Text style={styles.text}>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</Text>
         </View>
-
     );
 }
 
