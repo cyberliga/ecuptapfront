@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { StyleSheet, Image, View } from "react-native";
 import { useEffect, useState } from 'react';
 import { getQuery } from "@/app/api/hooks/getQuery"
+import  Carousel  from '@/components/Carousels/index';
 import User from "@/app/api/schema"
 import Loader from '@/components/Loader';
 import Erorr from '@/components/Error'
@@ -17,6 +18,7 @@ export default function TabLayout() {
   const [ratePerHour, setRatePerHour] = useState(0);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showCarousel, setShowCarousel] = useState(true);
 
   useEffect(() => {
     const response = getQuery<User>({ path: `/users/${tg_user_id}` });
@@ -39,8 +41,11 @@ export default function TabLayout() {
     <> 
       {loading ? <Loader /> 
         : error ? <Erorr />
-        : (
+        : showCarousel ?(
+          <Carousel setShowCarousel={setShowCarousel}/>
+        )  : (
           <>
+        
           <View style={styles.container}>
               <Header />
             </View>
