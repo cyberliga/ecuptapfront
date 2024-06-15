@@ -1,43 +1,41 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useState, useCallback, useEffect } from "react";
-
+import { useCallback, Dispatch, SetStateAction } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
-import * as SplashScreen from 'expo-splash-screen';
-
 import { getQuery } from "@/app/api/hooks/getQuery"
 import { claimedTotalCurrent } from '@/app/api/utils'
-
+import { useRoute, RouteProp } from '@react-navigation/native';
 import User from "@/app/api/schema"
-
 import Timer from "@/components/Timer"
-import FarmButton from '@/components/Buttons/FarmButton';
+import * as SplashScreen from 'expo-splash-screen';
 
+type FarmTabPropsList = {
+  Farm: {
+    setStartFarmDate: Dispatch<SetStateAction<number>>, 
+    setFinishDate: Dispatch<SetStateAction<number>> , 
+    setMoney: Dispatch<SetStateAction<number>>, 
+    startFarmDate: number , 
+    ratePerHour: number, 
+    money: number , 
+    finishdate: number , 
+  };
+};
+type FarmTabProps = RouteProp<FarmTabPropsList, 'Farm'>;
 
-
-export default function FarmTab() {
+const FarmTab: React.FC = () =>  {
   require('@/assets/js/telegram-web-app')
+  const route = useRoute<FarmTabProps>();
+  const {
+    setStartFarmDate, setFinishDate, setMoney, startFarmDate, 
+    ratePerHour, money, finishdate
+  } = route.params;
 
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : "localuser"
 
-  const [finishdate, setFinishDate] = useState(0);
-  const [startFarmDate, setStartFarmDate] = useState(0);
-  const [money, setMoney] = useState(0);
-  const [ratePerHour, setRatePerHour] = useState(0);
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
   });
-
-  useEffect(() => {
-    const response = getQuery<User>({ path: `/users/${tg_user_id}` });
-    response.then((res) => {
-      setStartFarmDate(res.farm_start)
-      setFinishDate(res.farm_finish)
-      setRatePerHour(res.farm_coins_per_hour)
-      setMoney(res.total_coins);
-    })
-  }, [tg_user_id])
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded || fontError) {
@@ -47,22 +45,19 @@ export default function FarmTab() {
 
   const handleClaimClick = async () => {
     const response = getQuery<User>({ path: `/users/${tg_user_id}/claim-farmed-coins` });
-
     response.then((res: User) => {
       setStartFarmDate(res.farm_start)
       setFinishDate(res.farm_finish)
       setMoney(res.total_coins);
     })
   }
-
   const claimedTotal = claimedTotalCurrent(startFarmDate, ratePerHour)
 
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
-
       <Text style={styles.text}>
-        <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight: 10 }} />
-        {money}
+          <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight: 10 }} />
+          {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
@@ -125,3 +120,5 @@ declare global {
     Telegram: any;
   }
 }
+
+export default FarmTab
