@@ -11,7 +11,7 @@ export default function FarmButton() {
     require('@/assets/js/telegram-web-app')
 
     const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-    const tg_user_id = tg_user ? tg_user.id : "localuser"
+    const tg_user_id = tg_user ? tg_user.id : 412037449;
     const [finishdate, setFinishDate] = useState(0);
     const [startFarmDate, setStartFarmDate] = useState(0);
     const [money, setMoney] = useState(0);

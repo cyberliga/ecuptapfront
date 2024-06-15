@@ -9,7 +9,7 @@ import Header from '../../components/Header';
 
 export default function TabLayout() {
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-  const tg_user_id = tg_user ? tg_user.id : "localuser";
+  const tg_user_id = tg_user ? tg_user.id : 412037449;
 
   const [finishdate, setFinishDate] = useState(0);
   const [startFarmDate, setStartFarmDate] = useState(0);
@@ -19,8 +19,7 @@ export default function TabLayout() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // const response = getQuery<User>({ path: `/users/${tg_user_id}` });
-    const response = getQuery<User>({ path: `/users/basicscode` });
+    const response = getQuery<User>({ path: `/users/${tg_user_id}` });
     setLoading(true);
     response.then((res) => {
      if(res.message) {
@@ -39,7 +38,7 @@ export default function TabLayout() {
   return (
     <> 
       {loading ? <Loader /> 
-        : !error ? <Erorr />
+        : error ? <Erorr />
         : (
           <>
           <View style={styles.container}>

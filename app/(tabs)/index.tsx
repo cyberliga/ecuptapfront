@@ -31,7 +31,7 @@ const FarmTab: React.FC = () =>  {
   } = route.params;
 
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-  const tg_user_id = tg_user ? tg_user.id : "localuser"
+  const tg_user_id = tg_user ? tg_user.id : 412037449;
 
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
