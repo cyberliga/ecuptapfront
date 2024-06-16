@@ -6,15 +6,11 @@ export const getHeaders = () => {
         "Content-Type": "application/json",
     };
 };
-type GetQueryType = {
-    path: string;
-    token?: boolean;
-};
 
-export const getQuery = <T>({ path, token }: GetQueryType) => {
+export const getQuery = <T>(path: string) => {
     const endpoint = `${baseUrl}${path}`;
     const res = fetch(endpoint, {
-        headers: getHeaders()
+        headers: getHeaders(),
     });
-    return res.then((r) => r.json() as T);
+    return res.then((r) => r as T);
 };

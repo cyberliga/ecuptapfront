@@ -6,4 +6,15 @@ export default interface User {
     "farm_finish": number
     "farm_coins_per_hour": number,
     "total_coins": number
+    "is_onboarder": boolean
+}
+
+export interface Referral {
+    "user_id": number,
+    "username": string,
+    "reward": number
+}
+
+export interface Referrals {
+    referrals: Referral[]
 }

@@ -11,22 +11,23 @@ import * as SplashScreen from 'expo-splash-screen';
 
 type FarmTabPropsList = {
   Farm: {
-    setStartFarmDate: Dispatch<SetStateAction<number>>, 
-    setFinishDate: Dispatch<SetStateAction<number>> , 
-    setMoney: Dispatch<SetStateAction<number>>, 
-    startFarmDate: number , 
-    ratePerHour: number, 
-    money: number , 
-    finishdate: number , 
+    setStartFarmDate: Dispatch<SetStateAction<number>>,
+    setFinishDate: Dispatch<SetStateAction<number>>,
+    setMoney: Dispatch<SetStateAction<number>>,
+    startFarmDate: number,
+    ratePerHour: number,
+    money: number,
+    finishdate: number,
   };
 };
+
 type FarmTabProps = RouteProp<FarmTabPropsList, 'Farm'>;
 
-const FarmTab: React.FC = () =>  {
+const FarmTab: React.FC = () => {
   require('@/assets/js/telegram-web-app')
   const route = useRoute<FarmTabProps>();
   const {
-    setStartFarmDate, setFinishDate, setMoney, startFarmDate, 
+    setStartFarmDate, setFinishDate, setMoney, startFarmDate,
     ratePerHour, money, finishdate
   } = route.params;
 
@@ -44,7 +45,7 @@ const FarmTab: React.FC = () =>  {
   }, [fontsLoaded, fontError]);
 
   const handleClaimClick = async () => {
-    const response = getQuery<User>({ path: `/users/${tg_user_id}/claim-farmed-coins` });
+    const response = getQuery<User>(`/users/${tg_user_id}/claim-farmed-coins`);
     response.then((res: User) => {
       setStartFarmDate(res.farm_start)
       setFinishDate(res.farm_finish)
@@ -56,8 +57,8 @@ const FarmTab: React.FC = () =>  {
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
-          <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight: 10 }} />
-          {money}
+        <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight: 10 }} />
+        {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
