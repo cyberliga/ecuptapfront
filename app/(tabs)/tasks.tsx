@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'tamagui'
 
-import { getQuery } from '../api/hooks/getQuery';
+import { useQuery } from "@/app/api/hooks/getQuery"
 import { Tasks, Task } from '@/app/api/schema'
 
 
@@ -10,23 +10,16 @@ export default function TasksTab() {
     const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const tg_user_id = tg_user ? tg_user.id : 412037449;
     const [tasks, setTasks] = useState(Array<Task>)
+    const { data, isLoading } = useQuery<Tasks>(`/users/${tg_user_id}/tasks`);
 
     useEffect(() => {
-        const response = getQuery<Tasks>(`/users/${tg_user_id}/tasks`);
-        response.then((res) => {
-            if (!res.ok) {
-                console.log(res)
-                console.log("ne ok")
-                setTasks([])
-            } else {
-                res.json().then((r) => {
-                    console.log("ok")
-                    console.log(r)
-                    setTasks(r.tasks)
-                })
-            }
-        });
+        if (data) {
+            setTasks(data.tasks)
+        } else {
+            console.log("Error while get tasks")
+        }
     }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>

@@ -22,7 +22,6 @@ export default function TabLayout() {
   const { data } = useQuery<User>(`/users/${tg_user_id}`, !loading);
 
   useEffect(() => {
-
     if (data) {
       console.log(12)
       setRatePerHour(data.farm_coins_per_hour)
