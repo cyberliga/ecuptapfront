@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { getQuery } from "@/app/api/hooks/getQuery"
-import User from "@/app/api/schema"
 
 type slideTypes = {
   title: string;
+  subTitle: string;
   text: string;
   image: any;
   index: number;
@@ -17,13 +17,15 @@ type CarouselItemProps = {
 }
 
 export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide, setShowCarousel }) => {
-  require('@/assets/js/telegram-web-app')
+  require('@/assets/js/telegram-web-app');
+
+  const { title, subTitle, text, image, index } = item;
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
+
   const changeActiveTab = () => {
     setActiveSlide((slide) => slide + 1)
   }
-
   const changeOnboarderStatus = () => {
     getQuery<any>(`/users/${tg_user_id}/onboarded`);
     setShowCarousel(false)
@@ -31,10 +33,11 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
 
   return (
     <View style={styles.slide}>
-      <Text style={styles.phase}>{item.title}</Text>
-      <Image source={item.image} style={styles.image} />
-      <Text style={styles.text}>{item.text}</Text>
-      {item.index === 4 ? (
+      <Text style={styles.text}>{text}</Text>
+      <Text style={styles.title}>{ title}</Text>
+      <Image source={image} style={styles.image} />
+      <Text style={styles.subTitle}>{subTitle}</Text>
+      {index === 4 ? (
         <TouchableOpacity style={styles.button} onPress={() => changeOnboarderStatus()}>
           <Text style={styles.buttonText}>ЗАКРЫТЬ</Text>
         </TouchableOpacity>
@@ -42,8 +45,7 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
         <TouchableOpacity style={styles.button} onPress={changeActiveTab}>
           <Text style={styles.buttonText}>ДАЛЕЕ</Text>
         </TouchableOpacity>
-      )
-      }
+      )}
     </View>
   );
 }
@@ -51,33 +53,52 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    justifyContent: 'center',
+    gap: 35,
     alignItems: 'center',
     padding: 20,
     backgroundColor: '#fff',
-  },
-  phase: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginVertical: 10,
+    height: '100%',
+    position: 'relative',
   },
   image: {
     resizeMode: 'contain',
   },
-  text: {
-    fontSize: 14,
-    textAlign: 'center',
-    marginVertical: 10,
-  },
   button: {
-    marginTop: 20,
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: '#1920CB',
-    borderRadius: 5,
+    backgroundColor: '#4EF2FF',
+    borderRadius: 14,
+    width: 300,
+    position: 'absolute',
+    bottom: 40,
   },
   buttonText: {
     color: 'white',
     fontSize: 16,
+    textAlign: 'center',
+  },
+  subTitle: {
+    fontSize: 18,
+    fontWeight: 600,
+    lineHeight: 20,
+    color: '#141414',
+    textAlign: 'center',
+  },
+  title: {
+    fontSize: 21,
+    fontWeight: 600,
+    lineHeight: 23,
+    color: '#141414',
+    textAlign: 'center',
+  },
+  text: {
+    backgroundColor: '#979BFF',
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    fontSize: 13,
+    fontWeight: 800,
+    lineHeight: 14.69,
+    color: '#FFFFFF',
+    borderRadius: 34,
   },
 });

@@ -87,6 +87,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF'
+    backgroundColor: '#FFFFFF',
   },
 });

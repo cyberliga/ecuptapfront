@@ -5,6 +5,6 @@ import tamaguiConfig from '../tamagui.config'
 
 export default function App() {
   return (
-    <TamaguiProvider config={tamaguiConfig}></TamaguiProvider>
+    <TamaguiProvider config={tamaguiConfig} />
   )
 }
