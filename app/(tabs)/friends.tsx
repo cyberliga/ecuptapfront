@@ -38,7 +38,7 @@ export default function FriendTab() {
       </Text>
       <View style={styles.usersWrapper}>
         {refs.map((item, index) => (
-          <View style={styles.userConteiner} key={index} >
+          <View style={styles.userContainer} key={index} >
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
               <Image style={{ height: 32, width: 32, borderRadius: 96 }}
                 source={require('@/assets/images/avatars/avatar1.svg')} />
@@ -47,8 +47,8 @@ export default function FriendTab() {
               </Text>
             </View>
             <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-              <Image source={require('@/assets/images/icons/EcoinsIcon.svg')}
-                style={{ height: 15, width: 10, tintColor: '#979BFF' }} />
+              <Image source={require('@/assets/images/icons/colorEcoinsIcon.svg')}
+                style={{ height: 15, width: 10 }} />
               <Text style={styles.text}>
                 {item.reward}
               </Text>
@@ -66,21 +66,21 @@ export default function FriendTab() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#171C26',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
     gap: 18,
   },
   title: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 24,
     fontWeight: '700',
     lineHeight: 27.12,
     fontFamily: 'Inter',
   },
   subTitle: {
-    color: '#2D3748',
+    color: '#EBEBEB',
     fontSize: 16,
     fontWeight: '500',
     lineHeight: 18.08,
@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
     gap: 26,
     height: '70%',
   },
-  userConteiner: {
+  userContainer: {
     width: 350,
     display: 'flex',
     flexDirection: 'row',
@@ -102,14 +102,14 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   text: {
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '600',
     lineHeight: 18.08,
     fontFamily: 'Inter',
   },
   button: {
-    backgroundColor: "#BFFF97",
+    backgroundColor: "#4EF2FF",
     borderRadius: 14,
     width: 350,
     color: '#000000',

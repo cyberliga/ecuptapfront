@@ -1,7 +1,7 @@
 import { Tabs } from 'expo-router';
 import { StyleSheet, Image, View } from "react-native";
 import { useEffect, useState } from 'react';
-import { getQuery } from "@/app/api/hooks/getQuery"
+import { useQuery } from "@/app/api/hooks/getQuery"
 import Carousel from '@/components/Carousels/index';
 import User from "@/app/api/schema"
 import Loader from '@/components/Loader';
@@ -19,25 +19,23 @@ export default function TabLayout() {
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showCarousel, setShowCarousel] = useState(true);
+  const { data } = useQuery<User>(`/users/${tg_user_id}`, !loading);
 
   useEffect(() => {
-    const response = getQuery<User>(`/users/${tg_user_id}`);
-    setLoading(true);
 
-    response.then((res) => {
-      if (res.message) {
-        setLoading(false);
-        setError(true);
-      } else {
-        setStartFarmDate(res.farm_start)
-        setFinishDate(res.farm_finish)
-        setRatePerHour(res.farm_coins_per_hour)
-        setMoney(res.total_coins);
-        setLoading(false);
-        setShowCarousel(!res.is_onboarder)
-      }
-    })
-  }, [tg_user_id])
+    if (data) {
+      console.log(12)
+      setRatePerHour(data.farm_coins_per_hour)
+      setStartFarmDate(data?.farm_start)
+      setFinishDate(data.farm_finish)
+      setMoney(data.total_coins);
+      setLoading(false);
+      setShowCarousel(!data.is_onboarder)
+    } else {
+      console.log(data)
+    }
+  }, [])
+
 
   return (
     <>
@@ -50,7 +48,7 @@ export default function TabLayout() {
               <View style={styles.container}>
                 <Header />
               </View>
-              <Tabs screenOptions={{ tabBarActiveTintColor: '#979BFF' }}>
+              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarActiveBackgroundColor: "#171C26", tabBarInactiveBackgroundColor: "#171C26" }} >
                 <Tabs.Screen
                   name="index"
                   options={{

@@ -47,7 +47,7 @@ export default function TasksTab() {
                                 <Image style={{
                                     height: 12,
                                     width: 7,
-                                    tintColor: '#979BFF'
+                                    tintColor: '#4EF2FF'
                                 }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
                             </Text>
                         </View>
@@ -71,17 +71,17 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
         gap: 18,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#171C26',
     },
     title: {
-        color: '#000000',
+        color: '#FFFFFF',
         fontSize: 24,
         fontWeight: '700',
         lineHeight: 27.12,
         fontFamily: 'Inter',
     },
     subTitle: {
-        color: '#2D3748',
+        color: '#EBEBEB',
         fontSize: 16,
         fontWeight: '500',
         lineHeight: 18.08,
@@ -103,21 +103,24 @@ const styles = StyleSheet.create({
     taskDescrTitle: {
         fontWeight: 500,
         fontSize: 14,
-        color: '#000000',
+        color: '#FFFFFF',
     },
     taskDescrScoreSpan: {
         fontWeight: 500,
         fontSize: 12,
-        color: '#000000',
+        color: '#FFFFFF',
     },
     taskDescrScore: {
         fontWeight: 500,
         fontSize: 12,
-        color: '#979BFF',
+        color: '#4EF2FF',
     },
     taskButton: {
-        backgroundColor: "#BFFF97",
-        borderRadius: 25,
+        backgroundColor: "#4EF2FF",
+        borderRadius: 7,
+        color: "#141414",
+        fontWeight: 700,
+        height: 24
     },
     taskButtonClaimed: {
         borderRadius: 25,

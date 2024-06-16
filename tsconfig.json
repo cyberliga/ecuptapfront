@@ -11,9 +11,9 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
+    "**/*.webp",
     "custom.d.ts",
     ".expo/types/**/*.ts",
-    "expo-env.d.ts",
-    "*/.webp"
+    "expo-env.d.ts"
   ]
 }

@@ -34,7 +34,7 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
   return (
     <View style={styles.slide}>
       <Text style={styles.text}>{text}</Text>
-      <Text style={styles.title}>{ title}</Text>
+      <Text style={styles.title}>{title}</Text>
       <Image source={image} style={styles.image} />
       <Text style={styles.subTitle}>{subTitle}</Text>
       {index === 4 ? (
@@ -61,6 +61,8 @@ const styles = StyleSheet.create({
   },
   image: {
     resizeMode: 'contain',
+    width: 300,
+    height: 319
   },
   button: {
     paddingVertical: 10,

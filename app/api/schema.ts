@@ -1,5 +1,4 @@
 export default interface User {
-    'message'?: unknown
     "id": string,
     "total_amount_of_coins": number
     "farm_start": number

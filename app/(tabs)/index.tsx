@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useCallback, Dispatch, SetStateAction } from "react";
+import { useCallback, Dispatch, SetStateAction, useState, useEffect } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
-import { getQuery } from "@/app/api/hooks/getQuery"
+import { useMutation } from "@/app/api/hooks/getQuery"
 import { claimedTotalCurrent } from '@/app/api/utils'
 import { useRoute, RouteProp } from '@react-navigation/native';
 import User from "@/app/api/schema"
@@ -25,6 +25,8 @@ type FarmTabProps = RouteProp<FarmTabPropsList, 'Farm'>;
 
 const FarmTab: React.FC = () => {
   require('@/assets/js/telegram-web-app')
+  const [claimedTotal, setClaimedTotal] = useState(0)
+
   const route = useRoute<FarmTabProps>();
   const {
     setStartFarmDate, setFinishDate, setMoney, startFarmDate,
@@ -44,28 +46,42 @@ const FarmTab: React.FC = () => {
     }
   }, [fontsLoaded, fontError]);
 
+  const { mutate } = useMutation<any>({ path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET" });
+
   const handleClaimClick = async () => {
-    const response = getQuery<User>(`/users/${tg_user_id}/claim-farmed-coins`);
-    response.then((res: User) => {
-      setStartFarmDate(res.farm_start)
-      setFinishDate(res.farm_finish)
-      setMoney(res.total_coins);
+    mutate({ args: {} }).then((res) => {
+      if (!res.ok) {
+        console.log("ne ok")
+      } else {
+        res.json().then((data) => {
+          setStartFarmDate(data?.farm_start)
+          setFinishDate(data?.farm_finish)
+          setMoney(data?.total_coins);
+        });
+      }
     })
   }
-  const claimedTotal = claimedTotalCurrent(startFarmDate, ratePerHour)
+
+  const claimedTotalCurrent = () => {
+    // calculate how tokens farm user right now
+    return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
+  }
+
+  const claimedTotalCurrentValue = claimedTotalCurrent();
 
   return (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
-        <Image source={require("../../assets/images/icons/EcoinsIcon.svg")} style={{ marginRight: 10 }} />
+        <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17, height: 26, marginRight: 10 }} />
         {money}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
         <Timer finishDate={finishdate} />
-        <Text style={styles.button_text}> Farming  <Image style={{ height: 15, width: 10, marginLeft: 5 }}
+        <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
           source={require("../../assets/images/icons/EcoinsIcon.svg")} />
-          {claimedTotal}
+          {claimedTotalCurrentValue}
+          <span>Claim</span>
         </Text>
       </Button>
       {/* проблему описал внутри компонента FarmButton */}
@@ -82,31 +98,29 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    padding: 0,
-    margin: 10,
+    backgroundColor: "#4EF2FF",
+    borderRadius: 14,
     width: 350,
-    height: 62,
-    borderRadius: 10,
-    borderWidth: 0,
-    cursor: "pointer",
-    opacity: 0.8,
-    backgroundColor: "#BFFF97",
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '600',
+    fontFamily: 'Inter',
   },
   button_text: {
     display: 'flex',
     alignItems: 'center',
     gap: 5,
-    color: "#1C4532",
-    fontSize: 18,
+    color: "#141414",
+    fontSize: 16,
     fontWeight: 600,
     fontFamily: "Inter-Black",
-    lineHeight: 27
+    lineHeight: 28
   },
   text: {
     alignItems: 'flex-start',
-    color: '#000000',
+    color: '#FFFFFF',
     fontSize: 32,
-    fontWeight: '800',
+    fontWeight: '600',
     margin: 0,
   },
   buttonTextSpan: {
