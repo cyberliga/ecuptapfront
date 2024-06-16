@@ -25,10 +25,8 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
   }
 
   const changeOnboarderStatus = () => {
-    const response = getQuery<any>(`/users/${tg_user_id}/onboarded`);
-    response.then((res: any) => {
-      setShowCarousel(false)
-    })
+    getQuery<any>(`/users/${tg_user_id}/onboarded`);
+    setShowCarousel(false)
   }
 
   return (
