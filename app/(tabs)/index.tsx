@@ -1,38 +1,17 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useCallback, Dispatch, SetStateAction, useState, useEffect } from "react";
+import { useCallback} from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
-import { useMutation } from "@/app/api/hooks/getQuery"
-import { claimedTotalCurrent } from '@/app/api/utils'
-import { useRoute, RouteProp } from '@react-navigation/native';
-import User from "@/app/api/schema"
-import Timer from "@/components/Timer"
+import { useMutation } from '../api/hooks/useMutation';
+import MainButtonContent from "@/components/MainButtonContent"
 import * as SplashScreen from 'expo-splash-screen';
-
-type FarmTabPropsList = {
-  Farm: {
-    setStartFarmDate: Dispatch<SetStateAction<number>>,
-    setFinishDate: Dispatch<SetStateAction<number>>,
-    setMoney: Dispatch<SetStateAction<number>>,
-    startFarmDate: number,
-    ratePerHour: number,
-    money: number,
-    finishdate: number,
-  };
-};
-
-type FarmTabProps = RouteProp<FarmTabPropsList, 'Farm'>;
+import { useProps } from './_layout';
+import ButtonLoader from '@/components/Loader/ButtonLoader';
 
 const FarmTab: React.FC = () => {
   require('@/assets/js/telegram-web-app')
-  const [claimedTotal, setClaimedTotal] = useState(0)
-
-  const route = useRoute<FarmTabProps>();
-  const {
-    setStartFarmDate, setFinishDate, setMoney, startFarmDate,
-    ratePerHour, money, finishdate
-  } = route.params;
-
+  const { startFarmDate, ratePerHour, money, finishdate
+  } = useProps();
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
 
@@ -46,30 +25,23 @@ const FarmTab: React.FC = () => {
     }
   }, [fontsLoaded, fontError]);
 
-  const { mutate } = useMutation<any>({ path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET" });
+  const { mutate, loading } = useMutation<any>({ path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET" ,  queryKeyRefetch: [
+    `/users/${tg_user_id}`,
+  ],});
 
-  const handleClaimClick = async () => {
+  const handleClaimClick = () => {
     mutate({ args: {} }).then((res) => {
       if (!res.ok) {
         console.log("ne ok")
       } else {
         res.json().then((data) => {
-          setStartFarmDate(data?.farm_start)
-          setFinishDate(data?.farm_finish)
-          setMoney(data?.total_coins);
+          console.log(data)
         });
       }
     })
   }
 
-  const claimedTotalCurrent = () => {
-    // calculate how tokens farm user right now
-    return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
-  }
-
-  const claimedTotalCurrentValue = claimedTotalCurrent();
-
-  return (
+  return finishdate && startFarmDate && ratePerHour && (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17, height: 26, marginRight: 10 }} />
@@ -77,15 +49,11 @@ const FarmTab: React.FC = () => {
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
-        <Timer finishDate={finishdate} />
-        <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
-          source={require("../../assets/images/icons/EcoinsIcon.svg")} />
-          {claimedTotalCurrentValue}
-          <span>Claim</span>
-        </Text>
+        {loading ?  <ButtonLoader /> : (
+          <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate}  ratePerHour={ratePerHour}/>
+        )}
+       
       </Button>
-      {/* проблему описал внутри компонента FarmButton */}
-      {/* <FarmButton /> */}
     </View>
   );
 }
@@ -106,16 +74,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontFamily: 'Inter',
   },
-  button_text: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: 5,
-    color: "#141414",
-    fontSize: 16,
-    fontWeight: 600,
-    fontFamily: "Inter-Black",
-    lineHeight: 28
-  },
+
   text: {
     alignItems: 'flex-start',
     color: '#FFFFFF',

@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, Image } from 'react-native';
 import { secondsForFarm } from '@/app/api/utils'
 
-
-interface TimerProps {
-    finishDate: number
+type TimerProps = {
+    finishDate: number,
+    startFarmDate: number,
+    ratePerHour: number,
 }
 
-export default function Timer(props: TimerProps) {
+export default function MainButtonContent({finishDate ,startFarmDate ,ratePerHour }: TimerProps) {
     const [date, setDate] = useState("")
-    console.log
-
+    const [score, setScore] = useState(0)
     useEffect(() => {
-        let remainingSeconds = secondsForFarm(props.finishDate);
+        let remainingSeconds = secondsForFarm(finishDate);
         const interval = setInterval(() => {
             if (remainingSeconds >= 0) {
                 formatTime(remainingSeconds);
@@ -20,7 +20,7 @@ export default function Timer(props: TimerProps) {
             }
         }, 1000);
         return () => clearInterval(interval);
-    }, []);
+    }, [finishDate, startFarmDate ]);
 
     const formatTime = (seconds: number) => {
         const hours = Math.floor(seconds / 3600);
@@ -29,14 +29,21 @@ export default function Timer(props: TimerProps) {
         const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs} `;
 
         setDate(formattedTime)
-
+        setScore(Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60)))
         return formattedTime;
     }
 
     return (
+       <>
         <Text style={styles.buttonTextSpan}>
             {date}
         </Text>
+        <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
+            source={require('@/assets/images/icons/EcoinsIcon.svg')} />
+            {score}
+            <span>Claim</span>
+        </Text>
+      </>
     )
 }
 
@@ -45,5 +52,15 @@ const styles = StyleSheet.create({
         fontSize: 14,
         position: 'absolute',
         right: 270,
-    }
+    },
+    button_text: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 5,
+        color: "#141414",
+        fontSize: 16,
+        fontWeight: 600,
+        fontFamily: "Inter-Black",
+        lineHeight: 28
+      },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-import { getQuery } from "@/app/api/hooks/getQuery"
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useMutation } from '@/app/api/hooks/useMutation';
+import ButtonLoader from '../Loader/ButtonLoader';
 
 type slideTypes = {
   title: string;
@@ -13,22 +14,25 @@ type slideTypes = {
 type CarouselItemProps = {
   item: slideTypes,
   setActiveSlide: React.Dispatch<React.SetStateAction<number>>,
-  setShowCarousel: React.Dispatch<React.SetStateAction<boolean>>
+  setShowCarousel:  React.Dispatch<React.SetStateAction<boolean>>
 }
 
-export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide, setShowCarousel }) => {
+export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide , setShowCarousel}) => {
   require('@/assets/js/telegram-web-app');
-
-  const { title, subTitle, text, image, index } = item;
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
+  const { mutate, loading } = useMutation({ path: `/users/${tg_user_id}/onboarded`, method: "GET", queryKeyRefetch: [
+    `/users/${tg_user_id}`,
+  ] });
+  const { title, subTitle, text, image, index } = item;
 
   const changeActiveTab = () => {
     setActiveSlide((slide) => slide + 1)
   }
   const changeOnboarderStatus = () => {
-    getQuery<any>(`/users/${tg_user_id}/onboarded`);
-    setShowCarousel(false)
+    mutate({ args: {} }).then((res) => {
+      setShowCarousel(false);
+    })
   }
 
   return (
@@ -39,7 +43,10 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
       <Text style={styles.subTitle}>{subTitle}</Text>
       {index === 4 ? (
         <TouchableOpacity style={styles.button} onPress={() => changeOnboarderStatus()}>
-          <Text style={styles.buttonText}>ЗАКРЫТЬ</Text>
+          {loading ? <ButtonLoader /> : (
+              <Text style={styles.buttonText}>ЗАКРЫТЬ</Text>
+            )
+          }
         </TouchableOpacity>
       ) : (
         <TouchableOpacity style={styles.button} onPress={changeActiveTab}>
@@ -62,7 +69,7 @@ const styles = StyleSheet.create({
   image: {
     resizeMode: 'contain',
     width: 300,
-    height: 319
+    height: 319,
   },
   button: {
     paddingVertical: 10,
@@ -70,6 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#4EF2FF',
     borderRadius: 14,
     width: 300,
+    height: 42,
   },
   buttonText: {
     color: '#000000',

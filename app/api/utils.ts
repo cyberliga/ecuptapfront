@@ -7,15 +7,14 @@ export function formatTime(seconds: number) {
     return formattedTime;
 }
 
-
-export function claimedTotalCurrent(startFarmDate: number, ratePerHour: number) {
-    // calculate how tokens farm user right now
-    return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
-}
-
 export function secondsForFarm(finisTime: number) {
     const currentSecondsTime = new Date().getTime() / 1000;
     const secondsFarm = (finisTime - currentSecondsTime);
 
     return Math.floor(secondsFarm);
+}
+
+export function claimedTotalCurrent(startFarmDate: number, ratePerHour: number) {
+    // calculate how tokens farm user right now
+    return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
 }
