@@ -1,12 +1,12 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import { CarouselItem } from './CarouselItem';
 
 type slideTypes = {
-    title:  string;
-    text: string;
-    image: any;
-    index: number;
+  title: string;
+  text: string;
+  image: any;
+  index: number;
 }
 
 type CarouselProps = {
@@ -17,41 +17,41 @@ const slides: slideTypes[] = [
   {
     index: 0,
     title: 'ПЕРВАЯ ФАЗА',
-    text: 'ИГРА УЖЕ НАЧАЛАСЬ.\nВаша задача накопить стартовый капитал...',
-    image: require('@/assets/images/comingSoonImg.svg'),
+    text: '',
+    image: require('@/assets/images/firstStep.png'),
   },
   {
     index: 1,
-    title: '2 ФАЗА',
-    text: 'ИГРА УЖЕ НАЧАЛАСЬ.\nВаша задача накопить стартовый капитал...',
-    image: require('@/assets/images/comingSoonImg.svg'),
+    title: 'ПЕРВАЯ ФАЗА',
+    text: '',
+    image: require('@/assets/images/secondStep.png'),
   },
   {
     index: 2,
-    title: '3 ФАЗА',
-    text: 'ИГРА УЖЕ НАЧАЛАСЬ.\nВаша задача накопить стартовый капитал...',
-    image: require('@/assets/images/comingSoonImg.svg'),
+    title: 'ПЕРВАЯ ФАЗА',
+    text: '',
+    image: require('@/assets/images/thirdStep.png'),
   },
   {
     index: 3,
-    title: '4 ФАЗА',
-    text: 'ИГРА УЖЕ НАЧАЛАСЬ.\nВаша задача накопить стартовый капитал...',
-    image: require('@/assets/images/comingSoonImg.svg'),
+    title: 'ПЕРВАЯ ФАЗА',
+    text: '',
+    image: require('@/assets/images/fouthStep.png'),
   },
   {
     index: 4,
-    title: '4 ФАЗА',
-    text: 'ИГРА УЖЕ НАЧАЛАСЬ.\nВаша задача накопить стартовый капитал...',
-    image: require('@/assets/images/comingSoonImg.svg'),
+    title: 'ПЕРВАЯ ФАЗА',
+    text: '',
+    image: require('@/assets/images/fithStep.png'),
   },
 ];
 
-const Carousel = ({ setShowCarousel }:  CarouselProps) => {
+const Carousel = ({ setShowCarousel }: CarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(0)
   return (
-  <View>
-     <CarouselItem item={slides[activeSlide]} setActiveSlide={setActiveSlide} setShowCarousel={setShowCarousel}/>
-  </View>
+    <View>
+      <CarouselItem item={slides[activeSlide]} setActiveSlide={setActiveSlide} setShowCarousel={setShowCarousel} />
+    </View>
   );
 };
 
