@@ -1,24 +1,32 @@
+import { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { Button } from 'tamagui'
 
+import { getQuery } from '../api/hooks/getQuery';
+import { Tasks, Task } from '@/app/api/schema'
+
+
 export default function TasksTab() {
-    const dataTasks = [
-        {
-            title: 'Subscribe to ECUP.PRO Telegram',
-            score: 1000,
-            done: false,
-        },
-        {
-            title: 'Join ECUP’s Discord',
-            score: 200,
-            done: false,
-        },
-        {
-            title: 'Invite 5 friends',
-            score: 1000,
-            done: false,
-        },
-    ]
+    const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+    const tg_user_id = tg_user ? tg_user.id : 412037449;
+    const [tasks, setTasks] = useState(Array<Task>)
+
+    useEffect(() => {
+        const response = getQuery<Tasks>(`/users/${tg_user_id}/tasks`);
+        response.then((res) => {
+            if (!res.ok) {
+                console.log(res)
+                console.log("ne ok")
+                setTasks([])
+            } else {
+                res.json().then((r) => {
+                    console.log("ok")
+                    console.log(r)
+                    setTasks(r.tasks)
+                })
+            }
+        });
+    }, []);
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
@@ -28,14 +36,14 @@ export default function TasksTab() {
                 Earn more coins by doing tasks
             </Text>
             <View style={styles.tasksWrapper}>
-                {dataTasks.map((item, index)=> (
+                {tasks.map((item, index) => (
                     <View key={index} style={styles.tasksContainer}>
-                        <View style={{display: 'flex', gap: 5}}>
+                        <View style={{ display: 'flex', gap: 5 }}>
                             <Text style={styles.taskDescrTitle}>
-                                {item.title}
+                                {item.task?.text_ru}
                             </Text>
                             <Text style={styles.taskDescrScore}>
-                                <span style={styles.taskDescrScoreSpan}>+ </span>{item.score}{` `}
+                                <span style={styles.taskDescrScoreSpan}>+ </span>{item.task?.reward}{` `}
                                 <Image style={{
                                     height: 12,
                                     width: 7,
@@ -43,12 +51,12 @@ export default function TasksTab() {
                                 }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
                             </Text>
                         </View>
-                        {/* <Button style={styles.taskButton}> 
+                        <Button style={styles.taskButton}>
                             Claim
-                        </Button> */}
-                        <Button style={styles.taskButtonClaimed} disabled> 
-                            Claimed
                         </Button>
+                        {/* <Button style={styles.taskButtonClaimed} disabled> */}
+                        {/* Claimed */}
+                        {/* </Button> */}
                     </View>
                 ))}
             </View>
@@ -84,7 +92,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-    }, 
+    },
     tasksWrapper: {
         borderTopColor: '#EBEBEB',
         borderTopWidth: 1,

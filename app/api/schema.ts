@@ -18,3 +18,18 @@ export interface Referral {
 export interface Referrals {
     referrals: Referral[]
 }
+
+export interface Tasks {
+    tasks: Task[]
+}
+
+export interface Task {
+    task: TaskBody
+    status: boolean
+}
+
+export interface TaskBody {
+    text_ru: string
+    reward: number
+    url: string
+}
