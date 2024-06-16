@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import { getQuery } from "@/app/api/hooks/getQuery"
+import User from "@/app/api/schema"
 
 type slideTypes = {
   title: string;
@@ -15,16 +17,27 @@ type CarouselItemProps = {
 }
 
 export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide, setShowCarousel }) => {
+  require('@/assets/js/telegram-web-app')
+  const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
+  const tg_user_id = tg_user ? tg_user.id : 412037449;
   const changeActiveTab = () => {
     setActiveSlide((slide) => slide + 1)
   }
+
+  const changeOnboarderStatus = () => {
+    const response = getQuery<any>(`/users/${tg_user_id}/onboarded`);
+    response.then((res: any) => {
+      setShowCarousel(false)
+    })
+  }
+
   return (
     <View style={styles.slide}>
       <Text style={styles.phase}>{item.title}</Text>
       <Image source={item.image} style={styles.image} />
       <Text style={styles.text}>{item.text}</Text>
       {item.index === 4 ? (
-        <TouchableOpacity style={styles.button} onPress={() => setShowCarousel(false)}>
+        <TouchableOpacity style={styles.button} onPress={() => changeOnboarderStatus()}>
           <Text style={styles.buttonText}>ЗАКРЫТЬ</Text>
         </TouchableOpacity>
       ) : (

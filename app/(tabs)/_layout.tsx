@@ -35,6 +35,7 @@ export default function TabLayout() {
         setRatePerHour(res.farm_coins_per_hour)
         setMoney(res.total_coins);
         setLoading(false);
+        setShowCarousel(!res.is_onboarder)
       }
     })
   }, [tg_user_id])
