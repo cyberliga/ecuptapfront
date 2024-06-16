@@ -77,7 +77,7 @@ const FarmTab: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#171C26',
     justifyContent: 'space-around',
     alignItems: 'center',
   },

@@ -24,7 +24,6 @@ export default function TabLayout() {
     const response = getQuery<User>(`/users/${tg_user_id}`);
     setLoading(true);
 
-
     response.then((res) => {
       if (res.message) {
         setLoading(false);
@@ -87,6 +86,6 @@ export default function TabLayout() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#171C26',
   },
 });

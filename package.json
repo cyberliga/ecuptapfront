@@ -44,6 +44,7 @@
     "react-native-screens": "3.31.1",
     "react-native-svg": "^15.3.0",
     "react-native-web": "~0.19.10",
+    "react-native-webp-format": "^1.2.0",
     "tamagui": "^1.100.3"
   },
   "devDependencies": {

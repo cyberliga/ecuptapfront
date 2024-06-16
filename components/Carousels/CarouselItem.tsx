@@ -53,12 +53,11 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
 const styles = StyleSheet.create({
   slide: {
     flex: 1,
-    gap: 35,
     alignItems: 'center',
     padding: 20,
     height: '100%',
-    position: 'relative',
-    backgroundColor: '#171923'
+    backgroundColor: '#171923',
+    justifyContent: 'space-between',
   },
   image: {
     resizeMode: 'contain',
@@ -69,8 +68,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#4EF2FF',
     borderRadius: 14,
     width: 300,
-    position: 'absolute',
-    bottom: 40,
   },
   buttonText: {
     color: '#000000',

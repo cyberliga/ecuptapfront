@@ -1,4 +1,4 @@
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DefaultTheme, ThemeProvider, DarkTheme } from '@react-navigation/native';
 import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { TamaguiProvider } from 'tamagui';
@@ -10,7 +10,7 @@ export default function Layout() {
 
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-      <ThemeProvider value={DefaultTheme}>
+      <ThemeProvider value={DarkTheme}>
         <Stack>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         </Stack>
