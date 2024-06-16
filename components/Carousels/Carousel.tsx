@@ -55,7 +55,7 @@ const slides: slideTypes[] = [
 const Carousel = ({ setShowCarousel }: CarouselProps) => {
   const [activeSlide, setActiveSlide] = useState(0)
   return (
-    <View style={{height: '100%', width: 350}}>
+    <View style={{height: '100%', backgroundColor: '#171923'}}>
       <CarouselItem item={slides[activeSlide]} setActiveSlide={setActiveSlide} setShowCarousel={setShowCarousel} />
     </View>
   );

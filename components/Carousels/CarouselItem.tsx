@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
     gap: 35,
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#fff',
     height: '100%',
     position: 'relative',
+    backgroundColor: '#171923'
   },
   image: {
     resizeMode: 'contain',
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     bottom: 40,
   },
   buttonText: {
-    color: 'white',
+    color: '#000000',
     fontSize: 16,
     textAlign: 'center',
   },
@@ -81,18 +81,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 600,
     lineHeight: 20,
-    color: '#141414',
+    color: '#FFFFFF',
     textAlign: 'center',
   },
   title: {
     fontSize: 21,
     fontWeight: 600,
     lineHeight: 23,
-    color: '#141414',
+    color: '#FFFFFF',
     textAlign: 'center',
   },
   text: {
-    backgroundColor: '#979BFF',
+    backgroundColor: '#000000',
     paddingVertical: 6,
     paddingHorizontal: 12,
     fontSize: 13,
