@@ -1,4 +1,3 @@
-import { ReactNode } from 'react'
 import { Text, StyleSheet, Image } from "react-native"
 import { Button } from "tamagui"
 
@@ -9,8 +8,7 @@ interface ButtonSize {
 
 type ButtonProps = {
     size: ButtonSize,
-    onClickHandler: any,
-
+    callback: () => void,
 }
 
 export default function MainButton(props: ButtonProps) {
@@ -18,7 +16,7 @@ export default function MainButton(props: ButtonProps) {
     styles.button.height = props.size.height
 
     return (
-        <Button style={styles.button} onPress={props.onClickHandler}></Button>
+        <Button style={styles.button} onPress={props.callback}></Button>
     )
 }
 

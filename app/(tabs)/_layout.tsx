@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import { StyleSheet, Image, View } from "react-native";
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery } from '../api/hooks/useQuery';
 import Carousel from '@/components/Carousels/index';
 import User from "@/app/api/schema"
@@ -29,10 +29,32 @@ export default function TabLayout() {
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading, error: isError } = useQuery<User>(`/users/${tg_user_id}`);
+  const [showLoader, setShowLoader] = useState(false);
   const [showCarousel, setShowCarousel] = useState<boolean>(!!data?.is_onboarded); // TODO почему то !data?.is_onboarder возвращает тру, а должно фолс
+
+
+  useEffect(() => {
+    if (isLoading) {
+      const toRef = setTimeout(() => {
+        setShowLoader(true);
+        clearTimeout(toRef);
+        // it is good practice to clear the timeout (but I am not sure why)
+      }, 0);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (showLoader) {
+      const toRef = setTimeout(() => {
+        setShowLoader(false);
+        clearTimeout(toRef);
+      }, 4000);
+    }
+  }, [showLoader]);
+
   return (
     <>
-      {isLoading ? (
+      {showLoader ? (
         <View style={styles.loaderContainer}>
           <Loader />
         </View>

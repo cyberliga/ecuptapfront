@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "deploy": "gh-pages -t -d dist",
-    "predeploy": "expo export -p web"
+    "predeploy": "expo export -p web",
+    "customize": "expo customize:web"
   },
   "jest": {
     "preset": "jest-expo"
@@ -23,10 +24,12 @@
     "@tamagui/config": "^1.100.3",
     "@tamagui/lucide-icons": "^1.100.3",
     "@tanstack/react-query": "^5.45.0",
+    "@twa-dev/sdk": "^7.0.0",
     "expo": "~51.0.11",
     "expo-asset": "^10.0.8",
     "expo-dev-client": "~4.0.15",
     "expo-font": "~12.0.7",
+    "expo-image-manipulator": "^12.0.5",
     "expo-linking": "~6.3.1",
     "expo-router": "~3.5.15",
     "expo-splash-screen": "~0.27.5",

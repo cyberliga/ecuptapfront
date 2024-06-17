@@ -33,7 +33,7 @@ export default function FarmButton() {
 
     return (
         <>
-            <MainButton size={{ width: styles.button.width, height: styles.button.height }} onClickHandler={handleClaimClick} />
+            <MainButton size={{ width: styles.button.width, height: styles.button.height }} callback={handleClaimClick} />
             <Text style={styles.button_text}> Farming  <Image style={{ height: 15, width: 10, marginLeft: 5 }}
                 source={require("../../assets/images/icons/EcoinsIcon.svg")} />
                 {claimedTotal}

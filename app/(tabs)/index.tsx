@@ -47,7 +47,7 @@ const FarmTab: React.FC = () => {
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17, height: 26, marginRight: 10 }} />
-        {money}
+        {new Intl.NumberFormat("en").format(money)}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
@@ -78,8 +78,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    alignItems: 'flex-start',
+    alignItems: "center",
     color: '#FFFFFF',
+    display: "flex",
     fontSize: 32,
     fontWeight: '600',
     margin: 0,
