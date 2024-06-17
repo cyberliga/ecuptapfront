@@ -6,23 +6,21 @@ import { Button } from 'tamagui';
 import { Tasks } from '@/app/api/schema'
 import Loader from '@/components/Loader';
 
+type OpenURLButtonProps = {
+    url: string;
+    taskId: number,
+    children: any;
+    style: any
+};
 
 export default function TasksTab() {
     const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const tg_user_id = tg_user ? tg_user.id : 412037449;
     const { data, isLoading } = useQuery<Tasks>(`/users/${tg_user_id}/tasks`);
 
-    type OpenURLButtonProps = {
-        url: string;
-        taskId: number,
-        children: any;
-        style: any
-    };
-
     const OpenURLButton = ({ url, taskId, children, style }: OpenURLButtonProps) => {
         const handlePress = useCallback(async () => {
             const supported = await Linking.canOpenURL(url);
-
             if (supported) {
                 fetch(`${baseUrl}/users/${tg_user_id}/tasks/${taskId}/start`);
                 await Linking.openURL(url);
@@ -33,7 +31,6 @@ export default function TasksTab() {
 
         return <Button style={style} onPress={handlePress} >{children}</Button>;
     };
-
 
     return (
         <View style={styles.container}>
@@ -66,14 +63,17 @@ export default function TasksTab() {
                                         <OpenURLButton url={item.task?.url} style={styles.taskButton} taskId={item.task.sort} >
                                             Claim
                                         </OpenURLButton>
-                                    ) : item.status === "IN_PROGRESS" ? <Loader /> : (
-                                        <Button style={styles.taskButton} disabled>
+                                    ) : item.status === "IN_PROGRESS" ? (
+                                        <Button style={styles.taskButtonClaimed} disabled>
+                                            <Loader size={15} color={'#FFFFFF'}/>
+                                            Claimed
+                                        </Button>
+                                    )  : (
+                                        <Button style={styles.taskButtonClaimed} disabled>
                                             Claimed
                                         </Button>
                                     )
                                 }
-
-
                             </View>
                         ))}
                     </View>
@@ -111,13 +111,14 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottomColor: '#2D3748',
+        borderBottomWidth: 1,
+        paddingVertical: 13,
     },
     tasksWrapper: {
-        borderTopColor: '#EBEBEB',
-        borderTopWidth: 1,
         paddingTop: 50,
         display: 'flex',
-        gap: 26,
     },
     taskDescrTitle: {
         fontWeight: 500,
@@ -139,12 +140,14 @@ const styles = StyleSheet.create({
         borderRadius: 7,
         color: "#141414",
         fontWeight: 700,
-        height: 24
+        height: 24,
     },
     taskButtonClaimed: {
         borderRadius: 25,
-        backgroundColor: '#FFFFFF',
-        borderColor: '#000000',
+        backgroundColor: '#171C26',
+        borderColor:  '#FFFFFF',
+        color: "#FFFFFF",
         borderTopWidth: 1,
+        height: 24,
     }
 });

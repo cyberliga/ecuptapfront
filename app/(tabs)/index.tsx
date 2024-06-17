@@ -47,14 +47,13 @@ const FarmTab: React.FC = () => {
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17, height: 26, marginRight: 10 }} />
-        {new Intl.NumberFormat("en").format(money)}
+        {money && new Intl.NumberFormat("en").format(money)}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
           <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
         )}
-
       </Button>
     </View>
   );

@@ -1,15 +1,18 @@
 import { View, Text, StyleSheet, Image, Alert } from 'react-native';
 import { Button } from 'tamagui'
 import { Referrals } from "@/app/api/schema"
-import Clipboard from '@react-native-clipboard/clipboard';
 import { useQuery } from '../api/hooks/useQuery';
 import Loader from '@/components/Loader';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 export default function FriendTab() {
+  const WebApp = window.Telegram.WebApp;
   const copyToClipboard = (text: string) => {
-    Clipboard.setString(text);
     Alert.alert('Copied to Clipboard', 'The text has been copied to your clipboard.');
+    Clipboard.setString(text);
+    WebApp?.showAlert('The text has been copied to your clipboard.');
   };
+
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading } = useQuery<Referrals>(`/users/${tg_user_id}/referrals`);
@@ -44,7 +47,7 @@ export default function FriendTab() {
               </View>
             ))}
           </View>
-          <Button style={styles.button} onPress={() => copyToClipboard('asdas')}>
+          <Button style={styles.button} onPress={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
             Invite a friends
           </Button>
         </>
@@ -77,11 +80,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
   },
   usersWrapper: {
-    borderTopColor: '#EBEBEB',
-    borderTopWidth: 1,
     paddingTop: 50,
     display: 'flex',
-    gap: 26,
     height: '70%',
   },
   userContainer: {
@@ -90,6 +90,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 20,
+    borderBottomColor: '#2D3748',
+    borderBottomWidth: 1,
+    paddingVertical: 13,
   },
   text: {
     color: '#FFFFFF',

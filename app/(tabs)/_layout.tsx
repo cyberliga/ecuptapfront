@@ -4,7 +4,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery } from '../api/hooks/useQuery';
 import Carousel from '@/components/Carousels/index';
 import User from "@/app/api/schema"
-import Loader from '@/components/Loader';
+import LoaderImg from '@/components/Loader/LoaderImg';
 import Erorr from '@/components/Error'
 import Header from '../../components/Header';
 
@@ -56,7 +56,7 @@ export default function TabLayout() {
     <>
       {showLoader ? (
         <View style={styles.loaderContainer}>
-          <Loader />
+          <LoaderImg />
         </View>
       ) : isError ? <Erorr />
         : showCarousel ? (
