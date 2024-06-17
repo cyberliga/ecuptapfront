@@ -24,11 +24,12 @@ export interface Tasks {
 
 export interface Task {
     task: TaskBody
-    status: boolean
+    status: string
 }
 
 export interface TaskBody {
     text_ru: string
     reward: number
     url: string
+    sort: number
 }

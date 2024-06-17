@@ -60,7 +60,7 @@ export default function TabLayout() {
                 <Tabs.Screen
                   name="tasks"
                   options={{
-                    title: 'Tasks',
+                    title: 'Поле наград',
                     headerShown: false,
                     tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/tasksIcon.svg')} />,
                   }} />

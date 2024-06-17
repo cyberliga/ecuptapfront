@@ -1,5 +1,5 @@
 import { useQuery as useReactQuery } from "@tanstack/react-query";
-import { baseUrl, getHeaders } from "./utils";
+import { baseUrl, getHeaders } from "@/app/api/hooks/utils";
 
 
 export const getQuery = async <T>(path: string) => {

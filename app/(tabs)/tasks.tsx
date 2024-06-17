@@ -1,13 +1,40 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
-import { Button } from 'tamagui'
+import { View, Text, StyleSheet, Image, Alert, Linking } from 'react-native';
+import { useCallback } from 'react'
 import { useQuery } from '../api/hooks/useQuery';
+import { baseUrl } from "@/app/api/hooks/utils";
+import { Button } from 'tamagui';
 import { Tasks } from '@/app/api/schema'
 import Loader from '@/components/Loader';
+
 
 export default function TasksTab() {
     const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const tg_user_id = tg_user ? tg_user.id : 412037449;
     const { data, isLoading } = useQuery<Tasks>(`/users/${tg_user_id}/tasks`);
+
+    type OpenURLButtonProps = {
+        url: string;
+        taskId: number,
+        children: any;
+        style: any
+    };
+
+    const OpenURLButton = ({ url, taskId, children, style }: OpenURLButtonProps) => {
+        const handlePress = useCallback(async () => {
+            const supported = await Linking.canOpenURL(url);
+
+            if (supported) {
+                fetch(`${baseUrl}/users/${tg_user_id}/tasks/${taskId}/start`);
+                await Linking.openURL(url);
+            } else {
+                Alert.alert(`Don't know how to open this URL: ${url}`);
+            }
+        }, [url]);
+
+        return <Button style={style} onPress={handlePress} >{children}</Button>;
+    };
+
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
@@ -32,15 +59,21 @@ export default function TasksTab() {
                                             width: 7,
                                         }} source={require("../../assets/images/icons/colorEcoinsIcon.svg")} />
                                         {item.task?.reward}{` `}
-
                                     </Text>
                                 </View>
-                                <Button style={styles.taskButton}>
-                                    Claim
-                                </Button>
-                                {/* <Button style={styles.taskButtonClaimed} disabled> */}
-                                {/* Claimed */}
-                                {/* </Button> */}
+                                {
+                                    (item.status === "NOT_STARTED") ? (
+                                        <OpenURLButton url={item.task?.url} style={styles.taskButton} taskId={item.task.sort} >
+                                            {item.status ? "Claim" : <Loader />}
+                                        </OpenURLButton>
+                                    ) : (
+                                        <Button style={styles.taskButton} disabled>
+                                            Claimed
+                                        </Button>
+                                    )
+                                }
+
+
                             </View>
                         ))}
                     </View>
