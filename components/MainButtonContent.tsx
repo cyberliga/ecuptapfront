@@ -49,7 +49,7 @@ export default function MainButtonContent({ finishDate, startFarmDate, ratePerHo
             <Text style={styles.buttonTextSpan}>
                 {date}
             </Text>
-            <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
+            <Text style={styles.button_text}><Image style={{ height: 13.45, width: 8.75, marginTop: -1 }}
                 source={require('@/assets/images/icons/EcoinsIcon.svg')} />
                 {score}
                 <span>Claim</span>

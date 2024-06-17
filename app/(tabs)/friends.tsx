@@ -10,9 +10,8 @@ export default function FriendTab() {
   const copyToClipboard = (text: string) => {
     Alert.alert('Copied to Clipboard', 'The text has been copied to your clipboard.');
     Clipboard.setString(text);
-    WebApp?.showAlert('The text has been copied to your clipboard.');
   };
-
+  console.log(window)
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading } = useQuery<Referrals>(`/users/${tg_user_id}/referrals`);

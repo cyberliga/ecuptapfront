@@ -46,7 +46,7 @@ const FarmTab: React.FC = () => {
   return finishdate && startFarmDate && ratePerHour && (
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Text style={styles.text}>
-        <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17, height: 26, marginRight: 10 }} />
+        <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
         {money && new Intl.NumberFormat("en").format(money)}
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
@@ -77,9 +77,9 @@ const styles = StyleSheet.create({
   },
 
   text: {
+    display: 'flex',
     alignItems: "center",
     color: '#FFFFFF',
-    display: "flex",
     fontSize: 32,
     fontWeight: '600',
     margin: 0,

@@ -54,6 +54,7 @@ export default function TasksTab() {
                                         <Image style={{
                                             height: 12,
                                             width: 7,
+                                            marginRight: 3,
                                         }} source={require("../../assets/images/icons/colorEcoinsIcon.svg")} />
                                         {item.task?.reward}{` `}
                                     </Text>
@@ -134,6 +135,8 @@ const styles = StyleSheet.create({
         fontWeight: 500,
         fontSize: 12,
         color: '#4EF2FF',
+        display: 'flex',
+        alignItems: 'center',
     },
     taskButton: {
         backgroundColor: "#4EF2FF",
