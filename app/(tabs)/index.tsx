@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { useCallback} from "react";
+import { useCallback } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
 import { useMutation } from '../api/hooks/useMutation';
@@ -25,9 +25,11 @@ const FarmTab: React.FC = () => {
     }
   }, [fontsLoaded, fontError]);
 
-  const { mutate, loading } = useMutation<any>({ path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET" ,  queryKeyRefetch: [
-    `/users/${tg_user_id}`,
-  ],});
+  const { mutate, loading } = useMutation<any>({
+    path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET", queryKeyRefetch: [
+      `/users/${tg_user_id}`,
+    ],
+  });
 
   const handleClaimClick = () => {
     mutate({ args: {} }).then((res) => {
@@ -49,10 +51,10 @@ const FarmTab: React.FC = () => {
       </Text>
       <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
-        {loading ?  <ButtonLoader /> : (
-          <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate}  ratePerHour={ratePerHour}/>
+        {loading ? <ButtonLoader /> : (
+          <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
         )}
-       
+
       </Button>
     </View>
   );

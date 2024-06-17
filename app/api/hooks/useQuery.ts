@@ -1,8 +1,4 @@
-import {
-    useQuery as useReactQuery,
-    useMutation as useMutatuinReactQuery,
-    useQueryClient,
-} from "@tanstack/react-query";
+import { useQuery as useReactQuery } from "@tanstack/react-query";
 import { baseUrl, getHeaders } from "./utils";
 
 
@@ -20,7 +16,6 @@ export const useQuery = <T>(path: string, skip?: boolean) => {
     const { data, isLoading, refetch, error } = useReactQuery<T>({
         queryKey: [path],
         queryFn: () => getQuery<T>(path),
-        
         enabled: skip,
     });
     return { data, isLoading, refetch, error };

@@ -11,15 +11,15 @@ export default function FriendTab() {
     Alert.alert('Copied to Clipboard', 'The text has been copied to your clipboard.');
   };
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-  const tg_user_id = tg_user ? tg_user.id : 412037449;  
+  const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading } = useQuery<Referrals>(`/users/${tg_user_id}/referrals`);
 
-  return  (
+  return (
     <View style={styles.container}>
-      {isLoading ? <Loader/> : (
+      {isLoading ? <Loader /> : (
         <>
           <Text style={styles.title}>
-          Friends
+            Friends
           </Text>
           <Text style={styles.subTitle}>
             Invite friends to earn more coins
@@ -29,7 +29,7 @@ export default function FriendTab() {
               <View style={styles.userContainer} key={index} >
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                   <Image style={{ height: 32, width: 32, borderRadius: 96 }}
-                    source={require('@/assets/images/avatars/avatar1.svg')} />
+                    source={require('@/assets/images/avatars/avatar1.webp')} />
                   <Text style={styles.text}>
                     {item.username}
                   </Text>

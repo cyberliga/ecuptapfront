@@ -16,35 +16,36 @@ export default function TasksTab() {
             <Text style={styles.subTitle}>
                 Earn more coins by doing tasks
             </Text>
-           {isLoading ? <Loader /> :(
-            <>
-                <View style={styles.tasksWrapper}>
-                    {data?.tasks?.map((item, index) => (
-                        <View key={index} style={styles.tasksContainer}>
-                            <View style={{ display: 'flex', gap: 5 }}>
-                                <Text style={styles.taskDescrTitle}>
-                                    {item.task?.text_ru}
-                                </Text>
-                                <Text style={styles.taskDescrScore}>
-                                    <span style={styles.taskDescrScoreSpan}>+ </span>{item.task?.reward}{` `}
-                                    <Image style={{
-                                        height: 12,
-                                        width: 7,
-                                        tintColor: '#4EF2FF'
-                                    }} source={require("../../assets/images/icons/EcoinsIcon.svg")} />
-                                </Text>
-                            </View>     
-                            <Button style={styles.taskButton}>
-                                Claim
-                            </Button>
-                            {/* <Button style={styles.taskButtonClaimed} disabled> */}
-                            {/* Claimed */}
-                            {/* </Button> */}
-                        </View>
-                    ))}
-                </View>
-            </>
-           )}
+            {isLoading ? <Loader /> : (
+                <>
+                    <View style={styles.tasksWrapper}>
+                        {data?.tasks?.map((item, index) => (
+                            <View key={index} style={styles.tasksContainer}>
+                                <View style={{ display: 'flex', gap: 5 }}>
+                                    <Text style={styles.taskDescrTitle}>
+                                        {item.task?.text_ru}
+                                    </Text>
+                                    <Text style={styles.taskDescrScore}>
+                                        <span style={styles.taskDescrScoreSpan}>+ </span>
+                                        <Image style={{
+                                            height: 12,
+                                            width: 7,
+                                        }} source={require("../../assets/images/icons/colorEcoinsIcon.svg")} />
+                                        {item.task?.reward}{` `}
+
+                                    </Text>
+                                </View>
+                                <Button style={styles.taskButton}>
+                                    Claim
+                                </Button>
+                                {/* <Button style={styles.taskButtonClaimed} disabled> */}
+                                {/* Claimed */}
+                                {/* </Button> */}
+                            </View>
+                        ))}
+                    </View>
+                </>
+            )}
         </View>
     );
 }

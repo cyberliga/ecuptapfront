@@ -5,7 +5,7 @@ export default interface User {
     "farm_finish": number
     "farm_coins_per_hour": number,
     "total_coins": number
-    "is_onboarder": boolean
+    "is_onboarded": boolean
 }
 
 export interface Referral {

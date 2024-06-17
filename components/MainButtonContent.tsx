@@ -8,7 +8,7 @@ type TimerProps = {
     ratePerHour: number,
 }
 
-export default function MainButtonContent({finishDate ,startFarmDate ,ratePerHour }: TimerProps) {
+export default function MainButtonContent({ finishDate, startFarmDate, ratePerHour }: TimerProps) {
     const [date, setDate] = useState("")
     const [score, setScore] = useState(0)
     useEffect(() => {
@@ -17,10 +17,21 @@ export default function MainButtonContent({finishDate ,startFarmDate ,ratePerHou
             if (remainingSeconds >= 0) {
                 formatTime(remainingSeconds);
                 remainingSeconds--;
+            } else {
+                setDate("0:00:00")
+                setScore(getMaxTotalFarmValue)
             }
         }, 1000);
         return () => clearInterval(interval);
-    }, [finishDate, startFarmDate ]);
+    }, [finishDate, startFarmDate]);
+
+    const getMaxTotalFarmValue = () => {
+        return Math.round((((finishDate - startFarmDate)) * ratePerHour / 60 / 60))
+    }
+
+    const getTotalFarmValue = () => {
+        return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
+    }
 
     const formatTime = (seconds: number) => {
         const hours = Math.floor(seconds / 3600);
@@ -29,21 +40,21 @@ export default function MainButtonContent({finishDate ,startFarmDate ,ratePerHou
         const formattedTime = `${hours}:${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs} `;
 
         setDate(formattedTime)
-        setScore(Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60)))
+        setScore(getTotalFarmValue)
         return formattedTime;
     }
 
     return (
-       <>
-        <Text style={styles.buttonTextSpan}>
-            {date}
-        </Text>
-        <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
-            source={require('@/assets/images/icons/EcoinsIcon.svg')} />
-            {score}
-            <span>Claim</span>
-        </Text>
-      </>
+        <>
+            <Text style={styles.buttonTextSpan}>
+                {date}
+            </Text>
+            <Text style={styles.button_text}><Image style={{ height: 15, width: 10 }}
+                source={require('@/assets/images/icons/EcoinsIcon.svg')} />
+                {score}
+                <span>Claim</span>
+            </Text>
+        </>
     )
 }
 
@@ -62,5 +73,5 @@ const styles = StyleSheet.create({
         fontWeight: 600,
         fontFamily: "Inter-Black",
         lineHeight: 28
-      },
+    },
 });

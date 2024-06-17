@@ -1,11 +1,15 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
+import { useFonts } from 'expo-font';
 
 export default function Header() {
     require('@/assets/js/telegram-web-app')
+    const [fontsLoaded, fontError] = useFonts({
+        'Inter-Black': require('@/assets/fonts/Inter-Bold.ttf'),
+    });
 
     return (
         <View style={styles.container}>
-            <Image style={styles.image} source={require("@/assets/images/avatars/avatar1.svg")} />
+            <Image style={styles.image} source={require("@/assets/images/avatars/avatar1.webp")} />
             <Text style={styles.text}>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</Text>
         </View>
     );
@@ -27,11 +31,11 @@ const styles = StyleSheet.create({
         borderRadius: 96,
     },
     text: {
-        color: '#000000',
+        color: '#FFFFFF',
         fontSize: 18,
         fontWeight: '500',
         lineHeight: 20.34,
         margin: 0,
-        fontFamily: 'Inter',
+        fontFamily: 'Inter-Black',
     }
 });

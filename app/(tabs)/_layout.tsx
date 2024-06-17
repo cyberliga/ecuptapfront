@@ -29,51 +29,53 @@ export default function TabLayout() {
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading, error: isError } = useQuery<User>(`/users/${tg_user_id}`);
-  const [showCarousel, setShowCarouselt] = useState(!data?.is_onboarder);
+  const [showCarousel, setShowCarousel] = useState<boolean>(!!data?.is_onboarded); // TODO почему то !data?.is_onboarder возвращает тру, а должно фолс
   return (
     <>
-      {isLoading ? (    
+      {isLoading ? (
         <View style={styles.loaderContainer}>
           <Loader />
         </View>
-      ): isError ? <Erorr />
-          : showCarousel ? (
-            <Carousel setShowCarousel={setShowCarouselt}/>
-          ) : (
-            <>
-             <PropsContext.Provider value={{ startFarmDate: data?.farm_start, ratePerHour: data?.farm_coins_per_hour,
-                      money: data?.total_coins, finishdate: data?.farm_finish }}>
+      ) : isError ? <Erorr />
+        : showCarousel ? (
+          <Carousel setShowCarousel={setShowCarousel} />
+        ) : (
+          <>
+            <PropsContext.Provider value={{
+              startFarmDate: data?.farm_start, ratePerHour: data?.farm_coins_per_hour,
+              money: data?.total_coins, finishdate: data?.farm_finish
+            }}>
               <View style={styles.container}>
-                  <Header />
-                </View>
-                <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF',tabBarStyle: {height: 70, paddingBottom: 10, backgroundColor: '#171C26'} }} >
-                  <Tabs.Screen
-                    name="index"
-                    options={{
-                      title: 'Farm',
-                      headerShown: false,
-                      tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/homeIcon.svg')} />,
-                    }}
-                    />
-                  <Tabs.Screen
-                    name="tasks"
-                    options={{
-                      title: 'Tasks',
-                      headerShown: false,
-                      tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/tasksIcon.svg')} />,
-                    }} />
-                  <Tabs.Screen
-                    name="friends"
-                    options={{
-                      title: 'Friends',
-                      headerShown: false,
-                      tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/friendsIcon.svg')} />,
-                    }} />
-                </Tabs>
+                <Header />
+              </View>
+              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarStyle: { height: 70, paddingBottom: 10, backgroundColor: '#171C26' } }} >
+                <Tabs.Screen
+                  name="index"
+                  options={{
+                    title: 'Farm',
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/homeIcon.svg')} />,
+                  }}
+                />
+                <Tabs.Screen
+                  name="tasks"
+                  options={{
+                    title: 'Tasks',
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/tasksIcon.svg')} />,
+                  }} />
+                <Tabs.Screen
+                  name="friends"
+                  options={{
+                    title: 'Friends',
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/friendsIcon.svg')} />,
+                  }} />
+              </Tabs>
 
-             </PropsContext.Provider>
-            </>
-          )}
+            </PropsContext.Provider>
+          </>
+        )}
     </>
   );
 }
