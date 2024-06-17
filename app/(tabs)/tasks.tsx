@@ -64,9 +64,9 @@ export default function TasksTab() {
                                 {
                                     (item.status === "NOT_STARTED") ? (
                                         <OpenURLButton url={item.task?.url} style={styles.taskButton} taskId={item.task.sort} >
-                                            {item.status ? "Claim" : <Loader />}
+                                            Claim
                                         </OpenURLButton>
-                                    ) : (
+                                    ) : item.status === "IN_PROGRESS" ? <Loader /> : (
                                         <Button style={styles.taskButton} disabled>
                                             Claimed
                                         </Button>

@@ -48,7 +48,7 @@ export default function TabLayout() {
               <View style={styles.container}>
                 <Header />
               </View>
-              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarStyle: { height: 70, paddingBottom: 10, backgroundColor: '#171C26' } }} >
+              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarStyle: { height: 70, paddingBottom: 22, paddingTop: 14, backgroundColor: '#171C26' } }} >
                 <Tabs.Screen
                   name="index"
                   options={{
