@@ -8,12 +8,14 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useProps } from './_layout';
 import ButtonLoader from '@/components/Loader/ButtonLoader';
 
+
 const FarmTab: React.FC = () => {
   require('@/assets/js/telegram-web-app')
+  const WebApp = window.Telegram?.WebApp;
   const { startFarmDate, ratePerHour, money, finishdate
   } = useProps();
-  const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
-  const tg_user_id = tg_user ? tg_user.id : 412037449;
+  const tgUser = WebApp?.initDataUnsafe?.user;
+  const tgUserId = tgUser ? tgUser.id : 412037449;
 
   const [fontsLoaded, fontError] = useFonts({
     'Inter-Black': require('../../assets/fonts/Inter-Bold.ttf'),
@@ -26,21 +28,14 @@ const FarmTab: React.FC = () => {
   }, [fontsLoaded, fontError]);
 
   const { mutate, loading } = useMutation<any>({
-    path: `/users/${tg_user_id}/claim-farmed-coins`, method: "GET", queryKeyRefetch: [
-      `/users/${tg_user_id}`,
+    path: `/users/${tgUserId}/claim-farmed-coins`, method: "POST", queryKeyRefetch: [
+      `/users/${tgUserId}`,
     ],
   });
 
   const handleClaimClick = () => {
-    mutate({ args: {} }).then((res) => {
-      if (!res.ok) {
-        console.log("ne ok")
-      } else {
-        res.json().then((data) => {
-          console.log(data)
-        });
-      }
-    })
+    WebApp?.showAlert('Нафармлено')
+    mutate({ args: {} })
   }
 
   return finishdate && startFarmDate && ratePerHour && (
@@ -49,7 +44,7 @@ const FarmTab: React.FC = () => {
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
         {money && new Intl.NumberFormat("en").format(money)}
       </Text>
-      <Image source={require("../../assets/images/icons/EcupLogo.svg")} />
+      <Image source={require("@/assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
           <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
@@ -90,11 +85,5 @@ const styles = StyleSheet.create({
     right: -95,
   }
 });
-
-declare global {
-  interface Window {
-    Telegram: any;
-  }
-}
 
 export default FarmTab

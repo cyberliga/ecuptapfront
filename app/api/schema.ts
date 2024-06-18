@@ -27,8 +27,13 @@ export interface Task {
     status: string
 }
 
+export interface Text {
+    ru: string,
+    en: string
+}
+
 export interface TaskBody {
-    text_ru: string
+    text: Text,
     reward: number
     url: string
     sort: number

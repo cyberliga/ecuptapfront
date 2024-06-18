@@ -8,9 +8,8 @@ import Clipboard from '@react-native-clipboard/clipboard';
 export default function FriendTab() {
   const WebApp = window.Telegram.WebApp;
   const copyToClipboard = (text: string) => {
-    Alert.alert('Copied to Clipboard', 'The text has been copied to your clipboard.');
     Clipboard.setString(text);
-    WebApp?.showAlert('The text has been copied to your clipboard.');
+    WebApp?.showAlert('Ссылка скопирована');
   };
   console
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;

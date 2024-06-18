@@ -286,7 +286,7 @@
     var WebApp = {};
     var webAppInitData = '', webAppInitDataUnsafe = {};
     var themeParams = {}, colorScheme = 'light';
-    var webAppVersion = '6.0';
+    var webAppVersion = '6.2';
     var webAppPlatform = 'unknown';
 
     if (initParams.tgWebAppData && initParams.tgWebAppData.length) {

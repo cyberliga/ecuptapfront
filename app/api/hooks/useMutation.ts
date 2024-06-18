@@ -23,10 +23,14 @@ export const fetcher = async <T>(
     config: FetcherType<{ args?: T; pathWithParams?: string }>,
 ) => {
     const { method, path, args, token } = config;
-    return await fetch(`${baseUrl}${args?.pathWithParams ? args?.pathWithParams : path}`, {
+    const response = await fetch(`${baseUrl}${args?.pathWithParams ? args?.pathWithParams : path}`, {
         method,
         headers: token ? getHeaders() : { "Content-Type": "application/json" },
         body: JSON.stringify(args?.pathWithParams),
+    }).then((res) => {
+        if (res.status !== 204) {
+            return res.json().then((r) => r);
+        }
     });
 };
 

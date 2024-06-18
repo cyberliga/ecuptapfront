@@ -32,7 +32,6 @@ export default function TabLayout() {
   const [showLoader, setShowLoader] = useState(false);
   const [showCarousel, setShowCarousel] = useState<boolean>(!!data?.is_onboarded); // TODO почему то !data?.is_onboarder возвращает тру, а должно фолс
 
-
   useEffect(() => {
     if (isLoading) {
       const toRef = setTimeout(() => {
@@ -70,7 +69,7 @@ export default function TabLayout() {
               <View style={styles.container}>
                 <Header />
               </View>
-              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarStyle: { height: 70, paddingBottom: 22, paddingTop: 14, backgroundColor: '#171C26' } }} >
+              <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarLabelStyle: { fontSize: 15 }, tabBarStyle: { height: 80, paddingBottom: 22, paddingTop: 14, backgroundColor: '#171C26' } }} >
                 <Tabs.Screen
                   name="index"
                   options={{
@@ -80,20 +79,31 @@ export default function TabLayout() {
                   }}
                 />
                 <Tabs.Screen
+                  name="friends"
+                  options={{
+                    title: 'Friends',
+                    tabBarAllowFontScaling: true,
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/friendsIcon.svg')} />,
+                  }} />
+                <Tabs.Screen
                   name="tasks"
                   options={{
                     title: 'Поле наград',
                     headerShown: false,
                     tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/tasksIcon.svg')} />,
                   }} />
+
                 <Tabs.Screen
-                  name="friends"
+                  name="airdrop"
                   options={{
-                    title: 'Friends',
+                    title: 'Airdrop',
+                    tabBarAllowFontScaling: true,
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/friendsIcon.svg')} />,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/airdropIcon.svg')} />,
                   }} />
               </Tabs>
+
 
             </PropsContext.Provider>
           </>

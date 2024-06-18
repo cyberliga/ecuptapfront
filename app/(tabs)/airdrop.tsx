@@ -3,34 +3,27 @@ import { useQuery } from '../api/hooks/useQuery';
 import { Tasks } from '@/app/api/schema'
 import Loader from '@/components/Loader';
 import TaskComponent from "@/components/Tasks/Task"
+import MainButton from '@/components/Buttons/MainButton';
+import { Button } from 'tamagui';
+import MainButtonContent from "@/components/MainButtonContent"
 
-export default function TasksTab() {
-    const webApp = window.Telegram?.WebApp
-    const thUser = webApp.initDataUnsafe?.user;
-    const tgUserId: number = thUser ? thUser.id : 412037449;
-    const tguserLanguage = thUser ? thUser.language_code : "en"
-
-    const { data, isLoading } = useQuery<Tasks>(`/users/${tgUserId}/tasks`);
-
+export default function AirDropTab() {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>
-                Tasks
+                AirDrop
             </Text>
             <Text style={styles.subTitle}>
-                Earn more coins by doing tasks
+                Listing on its way. Information will appear below.
             </Text>
-            {isLoading ? <Loader /> : (
-                <>
-                    <View style={styles.tasksWrapper}>
-                        {data?.tasks?.map((item, index) => (
-                            <TaskComponent key={index} task={item} tgUserId={tgUserId} tgUserLanguage={tguserLanguage} />
-                        ))}
-                    </View>
-                </>
-            )}
+            <Button style={styles.button}>
+                <Text style={styles.buttonTitle}>
+                    Our Roadmap
+                </Text>
+            </Button>
         </View>
     );
+
 }
 
 const styles = StyleSheet.create({
@@ -59,5 +52,23 @@ const styles = StyleSheet.create({
     tasksWrapper: {
         paddingTop: 50,
         display: 'flex',
+    },
+    button: {
+        padding: 0,
+        margin: 10,
+        width: "100%",
+        height: 62,
+        borderRadius: 8,
+        borderWidth: 0,
+        cursor: "pointer",
+        opacity: 0.8,
+        backgroundColor: "#171C26",
+    },
+    buttonTitle: {
+        color: "#4EF2FF",
+        fontSize: 14,
+        fontWeight: 500,
+        lineHeight: 15.82,
+        textAlign: "left"
     }
 });
