@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
   },
   usersWrapper: {
-    paddingTop: 50,
+    paddingTop: 10,
     display: 'flex',
     height: '70%',
   },

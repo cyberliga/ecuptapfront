@@ -57,7 +57,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Inter',
     },
     tasksWrapper: {
-        paddingTop: 50,
+        paddingTop: 10,
         display: 'flex',
+        gap: 8
     }
 });
