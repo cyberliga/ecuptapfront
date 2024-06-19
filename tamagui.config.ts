@@ -38,7 +38,8 @@ export const tokens = createTokens(
     space: config.tokens.space,
     color: {
       ...config.tokens.color,
-      mainButton: "#4EF2FF"
+      mainButton: "#4EF2FF",
+      mainButtomText: "#141414"
     }
   }
 )

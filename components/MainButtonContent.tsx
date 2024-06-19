@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Image } from 'react-native';
-import { Text } from 'tamagui'
+import { Text, Image, styled } from 'tamagui'
 import { secondsForFarm } from '@/app/api/utils'
 
 type TimerProps = {
@@ -47,33 +46,32 @@ export default function MainButtonContent({ finishDate, startFarmDate, ratePerHo
 
     return (
         <>
-            <Text style={styles.buttonTextSpan}>
+            <TimerTextStyled >
                 {date}
-            </Text>
-            <Text style={styles.button_text}>
+            </TimerTextStyled>
+            <ClaimTextStyled>
                 <Image style={{ height: 13.45, width: 8.75, marginTop: -1 }}
                     source={require('@/assets/images/icons/EcoinsIcon.svg')} />
                 {score}
                 <span>Claim</span>
-            </Text>
+            </ClaimTextStyled>
         </>
     )
 }
 
-const styles = StyleSheet.create({
-    buttonTextSpan: {
-        fontSize: 14,
-        position: 'absolute',
-        right: 270,
-    },
-    button_text: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 5,
-        color: "#141414",
-        fontSize: 16,
-        fontWeight: 600,
-        fontFamily: "Inter-Black",
-        lineHeight: 28
-    },
-});
+const TimerTextStyled = styled(Text, {
+    fontSize: 14,
+    position: 'absolute',
+    right: 270,
+})
+
+const ClaimTextStyled = styled(Text, {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 5,
+    color: "$mainButtomText",
+    fontSize: 16,
+    fontWeight: 600,
+    lineHeight: 28,
+    hoverStyle: {}
+})
