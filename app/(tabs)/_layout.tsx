@@ -53,7 +53,7 @@ export default function TabLayout() {
 
   return (
     <>
-      {showLoader ? (
+      {false ? (
         <View style={styles.loaderContainer}>
           <LoaderImg />
         </View>

@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Image, Alert } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
+import { Text } from 'tamagui'
 import { Button } from 'tamagui'
 import { Referrals } from "@/app/api/schema"
 import { useQuery } from '../api/hooks/useQuery';

@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
+import { Text } from 'tamagui'
 import { useFonts } from 'expo-font';
 
 export default function Header() {

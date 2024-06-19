@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image } from 'react-native';
+import { Text } from 'tamagui'
 import { useCallback } from "react";
 import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
   text: {
     display: 'flex',
     alignItems: "center",
-    color: '#FFFFFF',
+    color: '$white',
     fontSize: 32,
     fontWeight: '600',
     margin: 0,

@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Text } from 'tamagui'
 import { useQuery } from '../api/hooks/useQuery';
 import { Tasks } from '@/app/api/schema'
 import Loader from '@/components/Loader';

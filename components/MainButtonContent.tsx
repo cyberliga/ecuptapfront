@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Text, StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { Text } from 'tamagui'
 import { secondsForFarm } from '@/app/api/utils'
 
 type TimerProps = {

@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Text, StyleSheet, Image } from "react-native"
+import { StyleSheet, Image } from "react-native"
+import { Text } from 'tamagui'
 import { getQuery } from "@/app/api/hooks/getQuery"
 import { claimedTotalCurrent, } from '@/app/api/utils'
 
 import User from "@/app/api/schema"
 import MainButton from './MainButton'
-import Timer from '../Timer'
 
 export default function FarmButton() {
     require('@/assets/js/telegram-web-app')
@@ -38,7 +38,6 @@ export default function FarmButton() {
                 source={require("../../assets/images/icons/EcoinsIcon.svg")} />
                 {claimedTotal}
             </Text>
-            <Timer finishDate={finishdate} />
         </>
 
     )
