@@ -1,15 +1,24 @@
 import { View, StyleSheet } from 'react-native';
-import { Text } from 'tamagui'
-import { useQuery } from '../api/hooks/useQuery';
-import { Tasks } from '@/app/api/schema'
-import Loader from '@/components/Loader';
-import TaskComponent from "@/components/Tasks/Task"
-import MainButton from '@/components/Buttons/MainButton';
-import { Button } from 'tamagui';
-import MainButtonContent from "@/components/Buttons/ButtonContent/MainButtonContent"
+import { Text, Button, styled } from 'tamagui';
+import { ChevronRight } from '@tamagui/lucide-icons';
+import { useState } from 'react';
+import { RoadMap } from '@/components/RoadMap';
 
 export default function AirDropTab() {
-    return (
+    const [showTab , setShowTab] =  useState(false);
+    const data = [
+        {
+            title: 'Our Roadmap',
+        },
+    ];
+    const seShowTab = () => {
+        setShowTab(true);
+    };
+    const setCloseTab = () => {
+        setShowTab(false);
+    }
+    console.log(showTab)
+    return !showTab ? (
         <View style={styles.container}>
             <Text style={styles.title}>
                 AirDrop
@@ -17,18 +26,22 @@ export default function AirDropTab() {
             <Text style={styles.subTitle}>
                 Listing on its way. Information will appear below.
             </Text>
-            <Button style={styles.button}>
-                <Text style={styles.buttonTitle}>
-                    Our Roadmap
-                </Text>
-            </Button>
+            {data.map((item, index) => (
+                <Button key={index} style={styles.box}
+                    onPress={seShowTab}>
+                    <Text style={styles.buttonTitle}>
+                        {item.title}
+                    </Text>
+                    <ChevronRight size="$2" color='#FFFFFF' />
+                </Button>
+            ))}
         </View>
-    );
-
+    ): <RoadMap setCloseTab={setCloseTab} />;
 }
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 30,
         flex: 1,
         padding: 20,
         display: 'flex',
@@ -54,22 +67,30 @@ const styles = StyleSheet.create({
         paddingTop: 50,
         display: 'flex',
     },
-    button: {
-        padding: 0,
-        margin: 10,
-        width: "100%",
-        height: 62,
-        borderRadius: 8,
-        borderWidth: 0,
-        cursor: "pointer",
-        opacity: 0.8,
-        backgroundColor: "#171C26",
-    },
     buttonTitle: {
         color: "#4EF2FF",
         fontSize: 14,
         fontWeight: 500,
         lineHeight: 15.82,
-        textAlign: "left"
-    }
+        fontFamily: 'Inter',
+    }, 
+    box : {
+        cursor: 'pointer',
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        backgroundColor: "#171C26",
+        borderRadius: 8,
+        borderWidth: 1,
+        width: "100%",
+        borderColor: '#2D3748',
+        padding: 16,
+        margin: 10,
+        height: 62,
+    },
 });
+
+// const AirDropTabItem = styled(View, {
+//     ...getTokens().airDropItem,
+// })

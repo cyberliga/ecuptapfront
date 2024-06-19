@@ -1,4 +1,4 @@
-import { Button, styled } from "tamagui"
+import { Button, styled , getTokens} from "tamagui"
 import { ReactNode } from "react"
 
 type ButtonSize = {
@@ -23,6 +23,7 @@ export default function MainActionButton({ size, callback, children }: ButtonPro
 }
 
 const MainActionButtonStyle = styled(Button, {
+    // ...getTokens().actionButton,
     padding: 0,
     margin: 10,
     // borderRadius: `${CONFIG_ATTRIBUT_NAME}.borderRadius`,

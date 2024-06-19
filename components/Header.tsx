@@ -9,7 +9,7 @@ export default function Header() {
 
     return (
         <HeaderStyle>
-            <HeaderAvatarStyle source={require("@/assets/images/avatars/1.webp")} />
+            <Image source={require("@/assets/images/avatars/1.webp")} style={{borderRadius: 96}} />
             <HeaderTextStyle>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</HeaderTextStyle>
         </HeaderStyle>
     );
@@ -22,15 +22,7 @@ const HeaderTextStyle = styled(Text, {
     lineHeight: 20.34,
     margin: 0,
 })
-
-const HeaderAvatarStyle = styled(Image, {
-    width: 2,
-    height: 2,
-    borderRadius: 100,
-})
-
 const HeaderStyle = styled(View, {
-    flex: 1,
     paddingTop: 20,
     display: 'flex',
     flexDirection: 'column',

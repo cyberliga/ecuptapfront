@@ -7,7 +7,6 @@ import User from "@/app/api/schema"
 import LoaderImg from '@/components/Loader/LoaderImg';
 import Erorr from '@/components/Error'
 import Header from '../../components/Header';
-import { useMutation } from '../api/hooks/useMutation';
 
 type PropsContextType = {
   startFarmDate?: number,
@@ -15,7 +14,6 @@ type PropsContextType = {
   money?: number,
   finishdate?: number,
 };
-
 const PropsContext = createContext<PropsContextType | undefined>(undefined);
 
 export const useProps = () => {
@@ -54,7 +52,7 @@ export default function TabLayout() {
 
   return (
     <>
-      {false ? (
+      {isLoading? (
         <View style={styles.loaderContainer}>
           <LoaderImg />
         </View>
@@ -67,9 +65,9 @@ export default function TabLayout() {
               startFarmDate: data?.farm_start, ratePerHour: data?.farm_coins_per_hour,
               money: data?.total_coins, finishdate: data?.farm_finish
             }}>
-              <View style={styles.container}>
+              {/* <View style={styles.container}>
                 <Header />
-              </View>
+              </View> */}
               <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarLabelStyle: { fontSize: 15 }, tabBarStyle: { height: 80, paddingBottom: 22, paddingTop: 14, backgroundColor: '#171C26' } }} >
                 <Tabs.Screen
                   name="index"
@@ -102,8 +100,6 @@ export default function TabLayout() {
                     tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/airdropIcon.svg')} />,
                   }} />
               </Tabs>
-
-
             </PropsContext.Provider>
           </>
         )}

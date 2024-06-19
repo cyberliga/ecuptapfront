@@ -10,7 +10,6 @@ export default function TasksTab() {
     const thUser = webApp.initDataUnsafe?.user;
     const tgUserId: number = thUser ? thUser.id : 412037449;
     const tguserLanguage = thUser ? thUser.language_code : "en"
-
     const { data, isLoading } = useQuery<Tasks>(`/users/${tgUserId}/tasks`);
 
     return (
@@ -36,6 +35,7 @@ export default function TasksTab() {
 
 const styles = StyleSheet.create({
     container: {
+        paddingTop: 30,
         flex: 1,
         padding: 20,
         display: 'flex',

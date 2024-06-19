@@ -3,12 +3,12 @@ import { Text, Button, View, Image, styled } from 'tamagui'
 import { useCallback } from "react";
 import { useFonts } from 'expo-font';
 import { useMutation } from '../api/hooks/useMutation';
+import { useProps } from './_layout';
+import Header from '@/components/Header';
 import MainButtonContent from "@/components/Buttons/ButtonContent/MainButtonContent"
 import * as SplashScreen from 'expo-splash-screen';
-import { useProps } from './_layout';
 import ButtonLoader from '@/components/Loader/ButtonLoader';
 import MainActionButton from '@/components/Buttons/MainButton'
-
 
 const FarmTab: React.FC = () => {
   require('@/assets/js/telegram-web-app')
@@ -41,6 +41,7 @@ const FarmTab: React.FC = () => {
 
   return finishdate && startFarmDate && ratePerHour && (
     <View onLayout={onLayoutRootView} style={styles.container}>
+      <Header />
       <MoneyTextStyled>
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
         {money && new Intl.NumberFormat("en").format(money)}
@@ -63,7 +64,6 @@ const MoneyTextStyled = styled(Text, {
   fontWeight: '600',
   margin: 0
 })
-
 const FarmButtomStyled = styled(Button, {
   backgroundColor: "$mainButton",
   borderRadius: 14,
@@ -72,13 +72,11 @@ const FarmButtomStyled = styled(Button, {
   fontSize: 16,
   fontWeight: '600',
 })
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#171C26',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   buttonTextSpan: {

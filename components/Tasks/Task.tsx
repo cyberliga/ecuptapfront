@@ -10,20 +10,15 @@ import MainActionButton from '@/components/Buttons/MainButton'
 import NonActionButton from "@/components/Buttons/NonActionButton"
 import { ReactNode } from "react"
 
-
-
 type OpenURLButtonProps = {
     url: string;
     children: ReactNode;
 };
-
 type TaskProps = {
     tgUserLanguage: string,
     tgUserId: number,
     task: Task
 }
-
-
 enum TaskStatus {
     IN_PROGRESS = "IN_PROGRESS",
     DONE = "DONE"
@@ -59,7 +54,6 @@ export default function TaskComponent({ tgUserLanguage, tgUserId, task }: TaskPr
         mutate({ args: {} })
         setTaskStatus(TaskStatus.DONE)
     }
-
 
     return (
         <View style={styles.tasksContainer}>

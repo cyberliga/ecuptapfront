@@ -1,6 +1,5 @@
 import { View, StyleSheet, Image, Alert } from 'react-native';
 import { Text } from 'tamagui'
-import { Button } from 'tamagui'
 import { Referrals } from "@/app/api/schema"
 import { useQuery } from '../api/hooks/useQuery';
 import Loader from '@/components/Loader';
@@ -13,7 +12,7 @@ export default function FriendTab() {
     Clipboard.setString(text);
     WebApp?.showAlert('Ссылка скопирована');
   };
-  console
+
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading } = useQuery<Referrals>(`/users/${tg_user_id}/referrals`);
@@ -59,6 +58,7 @@ export default function FriendTab() {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 30,
     flex: 1,
     backgroundColor: '#171C26',
     justifyContent: 'flex-start',

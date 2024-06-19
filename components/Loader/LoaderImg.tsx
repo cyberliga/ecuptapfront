@@ -2,9 +2,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Image } from "react-native";
 import { manipulateAsync, SaveFormat, ImageResult } from 'expo-image-manipulator';
 import { Asset } from 'expo-asset';
-import Loader from './Loader';
 import { UIActivityIndicator } from 'react-native-indicators';
-
 
 const LoaderImg = () => {
   const originalFile = "@/assets/images/preloader.webp"
@@ -19,7 +17,6 @@ const LoaderImg = () => {
           [{ resize: { width: 375, height: 812 } }],
           { compress: 0.5 }
         );
-
         setImage(manipResult);
       });
     })();

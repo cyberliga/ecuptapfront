@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { StyleSheet, Image } from "react-native"
 import { Text } from 'tamagui'
-import { getQuery } from "@/app/api/hooks/getQuery"
+import { getQuery } from '@/app/api/hooks/useQuery';
 import { claimedTotalCurrent, } from '@/app/api/utils'
 
 import User from "@/app/api/schema"

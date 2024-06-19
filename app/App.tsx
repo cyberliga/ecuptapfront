@@ -4,13 +4,10 @@ import { TamaguiProvider } from 'tamagui'
 import tamaguiConfig from '../tamagui.config'
 import { QueryProvider } from './api/hooks/QueryProvider';
 
-
-
-
 export default function App() {
   return (
     <TamaguiProvider config={tamaguiConfig}>
-      <QueryProvider ></QueryProvider>
+      <QueryProvider></QueryProvider>
     </TamaguiProvider >
   )
 }

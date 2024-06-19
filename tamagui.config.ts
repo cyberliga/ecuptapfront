@@ -1,5 +1,4 @@
 import { config } from '@tamagui/config/v3'
-
 import { createTamagui, createFont, createTokens } from 'tamagui'
 
 const interFont = createFont({
@@ -48,31 +47,48 @@ export const tokens = createTokens(
       borderColor: '#FFFFFF',
       borderRadius: "$5"
     },
+    // tabTitle : {
+    //   color: '#FFFFFF',
+    //   fontSize: 24,
+    //   fontWeight: '700',
+    //   lineHeight: 27.12,
+    //   fontFamily: 'Inter',
+    // },
+    // tabDescr : {
+    //   color: '#EBEBEB',
+    //   fontSize: 16,
+    //   fontWeight: '500',
+    //   lineHeight: 18.08,
+    //   fontFamily: 'Inter'
+    // },
     icon: {
       small: 16,
       medium: 24,
       large: 32,
-    }
+    },
+    // airDropItem: {
+    //     backgroundColor: "#171C26",
+    //     padding: 16,
+    //     margin: 10,
+    //     width: "100%",
+    //     height: 62,
+    //     borderRadius: 8,
+    //     borderWidth: 1,
+    //     borderColor: '#2D3748',
+    // },
   }
 )
 
 const customConfig = {
   ...config,
   tokens,
-
-
 }
 
-
 const tamaguiConfig = createTamagui(customConfig)
-
-
 type Conf = typeof tamaguiConfig
 
 declare module 'tamagui' {
-
   interface TamaguiCustomConfig extends Conf { }
-
 }
 export default tamaguiConfig
 // depending on if you chose tamagui, @tamagui/core, or @tamagui/web
