@@ -3,7 +3,7 @@ import { config } from '@tamagui/config/v3'
 import { createTamagui, createFont, createTokens } from 'tamagui'
 
 const interFont = createFont({
-  family: 'Inter, Helvetica, Arial, sans-serif',
+  family: 'Inter',
   size: {
     1: 12,
     2: 14,

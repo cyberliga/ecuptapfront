@@ -45,11 +45,11 @@ const FarmTab: React.FC = () => {
         {money && new Intl.NumberFormat("en").format(money)}
       </MoneyTextStyled>
       <Image source={require("@/assets/images/icons/EcupLogo.svg")} />
-      <Button style={styles.button} onPress={handleClaimClick}>
+      <FarmButtomStyled onPress={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
           <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
         )}
-      </Button>
+      </FarmButtomStyled>
     </View>
   );
 }
@@ -64,7 +64,14 @@ const MoneyTextStyled = styled(Text, {
   margin: 0
 })
 
-cons
+const FarmButtomStyled = styled(Button, {
+  backgroundColor: "$mainButton",
+  borderRadius: 14,
+  width: 350,
+  color: '#000000',
+  fontSize: 16,
+  fontWeight: '600',
+})
 
 
 const styles = StyleSheet.create({
@@ -73,15 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#171C26',
     justifyContent: 'space-around',
     alignItems: 'center',
-  },
-  button: {
-    backgroundColor: "#4EF2FF",
-    borderRadius: 14,
-    width: 350,
-    color: '#000000',
-    fontSize: 16,
-    fontWeight: '600',
-    fontFamily: 'Inter',
   },
   buttonTextSpan: {
     fontSize: 14,
