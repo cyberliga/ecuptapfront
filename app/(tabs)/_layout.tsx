@@ -55,7 +55,7 @@ export default function TabLayout() {
     <>
       {false ? (
         <View style={styles.loaderContainer}>
-          <LoaderImg />
+          {/* <LoaderImg /> */}
         </View>
       ) : isError ? <Erorr />
         : showCarousel ? (

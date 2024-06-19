@@ -51,6 +51,7 @@
     "experiments": {
       "typedRoutes": true,
       "baseUrl": "/ecuptapfront"
-    }
+    },
+    "sdkVersion": "51.0.0"
   }
 }

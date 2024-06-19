@@ -1,7 +1,6 @@
-import { View, StyleSheet, Image } from 'react-native';
-import { Text } from 'tamagui'
+import { StyleSheet } from 'react-native';
+import { Text, Button, View, Image, styled } from 'tamagui'
 import { useCallback } from "react";
-import { Button } from 'tamagui'
 import { useFonts } from 'expo-font';
 import { useMutation } from '../api/hooks/useMutation';
 import MainButtonContent from "@/components/MainButtonContent"
@@ -41,10 +40,10 @@ const FarmTab: React.FC = () => {
 
   return finishdate && startFarmDate && ratePerHour && (
     <View onLayout={onLayoutRootView} style={styles.container}>
-      <Text style={styles.text}>
+      <MoneyTextStyled>
         <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
         {money && new Intl.NumberFormat("en").format(money)}
-      </Text>
+      </MoneyTextStyled>
       <Image source={require("@/assets/images/icons/EcupLogo.svg")} />
       <Button style={styles.button} onPress={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
@@ -54,6 +53,19 @@ const FarmTab: React.FC = () => {
     </View>
   );
 }
+
+const MoneyTextStyled = styled(Text, {
+  name: 'MoneyText',
+  display: 'flex',
+  alignItems: "center",
+  color: 'white',
+  fontSize: 32,
+  fontWeight: '600',
+  margin: 0
+})
+
+cons
+
 
 const styles = StyleSheet.create({
   container: {
@@ -70,15 +82,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     fontFamily: 'Inter',
-  },
-
-  text: {
-    display: 'flex',
-    alignItems: "center",
-    color: '$white',
-    fontSize: 32,
-    fontWeight: '600',
-    margin: 0,
   },
   buttonTextSpan: {
     fontSize: 14,
