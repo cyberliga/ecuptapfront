@@ -69,7 +69,7 @@ const ClaimTextStyled = styled(Text, {
     display: 'flex',
     alignItems: 'center',
     gap: 5,
-    color: "$mainButtomText",
+    color: "$actionButton.textColor",
     fontSize: 16,
     fontWeight: 600,
     lineHeight: 28,

@@ -5,11 +5,16 @@ import { Button } from 'tamagui';
 import { Tasks, Task } from '@/app/api/schema'
 import Loader from '@/components/Loader';
 import { useMutation } from '@/app/api/hooks/useMutation';
+import MainActionButton from '@/components/Buttons/MainButton'
+
+import NonActionButton from "@/components/Buttons/NonActionButton"
+import { ReactNode } from "react"
+
+
 
 type OpenURLButtonProps = {
     url: string;
-    children: any;
-    style: any
+    children: ReactNode;
 };
 
 type TaskProps = {
@@ -34,14 +39,14 @@ export default function TaskComponent({ tgUserLanguage, tgUserId, task }: TaskPr
         ],
     });
 
-    const OpenURLButton = ({ url, children, style }: OpenURLButtonProps) => {
+    const OpenURLButton = ({ url, children }: OpenURLButtonProps) => {
         const handlePress = useCallback(async () => {
             webApp?.openTelegramLink(url)
             taskStart({ args: {} })
             setTaskStatus(TaskStatus.IN_PROGRESS)
         }, [url]);
 
-        return <Button style={style} onPress={handlePress} >{children}</Button>;
+        return <MainActionButton size={{ width: "$9", height: "$1.5" }} callback={handlePress} >{children}</MainActionButton>;
     };
 
     const { mutate, loading } = useMutation<any>({
@@ -68,24 +73,25 @@ export default function TaskComponent({ tgUserLanguage, tgUserId, task }: TaskPr
                         height: 12,
                         width: 7,
                         marginRight: 3,
-                    }} source={require("../../assets/images/icons/colorEcoinsIcon.svg")} />
+                    }} source={require("@/assets/images/icons/colorEcoinsIcon.svg")} />
                     {task.task.reward}{` `}
                 </Text>
             </View>
             {
                 (taskStatus === "NOT_STARTED") ? (
-                    <OpenURLButton url={task.task?.url} style={styles.taskButton} >
+                    <OpenURLButton url={task.task?.url} >
                         Go
                     </OpenURLButton>
                 ) : taskStatus === "IN_PROGRESS" ? (
-                    <Button style={styles.taskButtonClaim} onPress={handleClaimClick}>
+                    <MainActionButton size={{ width: "$9", height: "$1.5" }} callback={handleClaimClick}>
                         <Loader size={15} color={'#FFFFFF'} />
-                        Claim
-                    </Button>
+                        <span>Claim</span>
+                    </MainActionButton>
                 ) : (
-                    <Button style={styles.taskButtonClaim} disabled>
-                        Claimed
-                    </Button>
+                    <NonActionButton size={{ width: "$9", height: "$1.5" }}>
+                        <Image source={require("@/assets/images/icons/claimedIcons.svg")}></Image>
+                        <span>Claimed</span>
+                    </NonActionButton>
                 )
             }
         </View>
@@ -124,19 +130,4 @@ const styles = StyleSheet.create({
         display: 'flex',
         alignItems: 'center',
     },
-    taskButton: {
-        backgroundColor: "#4EF2FF",
-        borderRadius: 7,
-        color: "#141414",
-        fontWeight: 700,
-        height: 24,
-    },
-    taskButtonClaim: {
-        borderRadius: 25,
-        backgroundColor: '#171C26',
-        borderColor: '#FFFFFF',
-        color: "#FFFFFF",
-        borderTopWidth: 1,
-        height: 24,
-    }
 });

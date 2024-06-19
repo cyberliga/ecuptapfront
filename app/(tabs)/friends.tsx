@@ -33,7 +33,7 @@ export default function FriendTab() {
               <View style={styles.userContainer} key={index} >
                 <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
                   <Image style={{ height: 32, width: 32, borderRadius: 96 }}
-                    source={require('@/assets/images/avatars/avatar1.webp')} />
+                    source={require('@/assets/images/avatars/1.webp')} />
                   <Text style={styles.text}>
                     {item.username}
                   </Text>
@@ -48,7 +48,7 @@ export default function FriendTab() {
               </View>
             ))}
           </View>
-          <MainActionButton size={{ width: 350, height: 62 }} callback={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
+          <MainActionButton size={{ width: "$mainButtonSize", height: "$62" }} callback={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
             Invite a friends
           </MainActionButton>
         </>

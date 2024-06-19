@@ -1,9 +1,9 @@
 import { Button, styled } from "tamagui"
 import { ReactNode } from "react"
 
-interface ButtonSize {
-    height: number
-    width: number
+type ButtonSize = {
+    height: string
+    width: string
 }
 
 type ButtonProps = {
@@ -12,9 +12,11 @@ type ButtonProps = {
     children?: ReactNode,
 }
 
+const CONFIG_ATTRIBUT_NAME = "$actionButton"
+
 export default function MainActionButton({ size, callback, children }: ButtonProps) {
     return (
-        <MainActionButtonStyle width={size.width} height={size.height} onPress={callback}>
+        <MainActionButtonStyle width={"$0"} height={size.height} onPress={callback}>
             {children}
         </MainActionButtonStyle>
     )
@@ -23,9 +25,10 @@ export default function MainActionButton({ size, callback, children }: ButtonPro
 const MainActionButtonStyle = styled(Button, {
     padding: 0,
     margin: 10,
-    borderRadius: "$5",
+    // borderRadius: `${CONFIG_ATTRIBUT_NAME}.borderRadius`,
+    borderRadius: 7,
     borderWidth: 0,
     cursor: "pointer",
     opacity: 0.8,
-    backgroundColor: "$mainButton",
+    backgroundColor: `${CONFIG_ATTRIBUT_NAME}.backgroundColor`
 })

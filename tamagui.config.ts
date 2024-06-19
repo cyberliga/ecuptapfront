@@ -32,14 +32,26 @@ const interFont = createFont({
 
 export const tokens = createTokens(
   {
-    size: config.tokens.size,
+    size: { ...config.tokens.size, mainButtonSize: 350 },
     radius: config.tokens.radius,
     zIndex: config.tokens.zIndex,
     space: config.tokens.space,
-    color: {
-      ...config.tokens.color,
-      mainButton: "#4EF2FF",
-      mainButtomText: "#141414"
+    color: config.tokens.color,
+    actionButton: {
+      backgroundColor: "#4EF2FF",
+      textColor: "#141414",
+      borderRadius: 7
+    },
+    nonActionButton: {
+      backgroundColor: "#171C26",
+      textColor: "#FFFFFF",
+      borderColor: '#FFFFFF',
+      borderRadius: "$5"
+    },
+    icon: {
+      small: 16,
+      medium: 24,
+      large: 32,
     }
   }
 )
@@ -47,6 +59,8 @@ export const tokens = createTokens(
 const customConfig = {
   ...config,
   tokens,
+
+
 }
 
 

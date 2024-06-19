@@ -46,7 +46,7 @@ const FarmTab: React.FC = () => {
         {money && new Intl.NumberFormat("en").format(money)}
       </MoneyTextStyled>
       <Image source={require("@/assets/images/icons/EcupLogo.svg")} />
-      <MainActionButton size={{ width: 350, height: 62 }} callback={handleClaimClick}>
+      <MainActionButton size={{ width: "$mainButtonSize", height: "$62" }} callback={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
           <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
         )}
@@ -56,7 +56,6 @@ const FarmTab: React.FC = () => {
 }
 
 const MoneyTextStyled = styled(Text, {
-  name: 'MoneyText',
   display: 'flex',
   alignItems: "center",
   color: 'white',

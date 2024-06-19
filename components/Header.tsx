@@ -1,5 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native';
-import { Text } from 'tamagui'
+import { Text, View, Image, styled } from 'tamagui'
 import { useFonts } from 'expo-font';
 
 export default function Header() {
@@ -9,34 +8,33 @@ export default function Header() {
     });
 
     return (
-        <View style={styles.container}>
-            <Image style={styles.image} source={require("@/assets/images/avatars/avatar1.webp")} />
-            <Text style={styles.text}>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</Text>
-        </View>
+        <HeaderStyle>
+            <HeaderAvatarStyle source={require("@/assets/images/avatars/1.webp")} />
+            <HeaderTextStyle>{window.Telegram?.WebApp?.initDataUnsafe?.user?.username}</HeaderTextStyle>
+        </HeaderStyle>
     );
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 20,
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 18
-    },
-    image: {
-        width: 76,
-        height: 76,
-        borderRadius: 96,
-    },
-    text: {
-        color: '#FFFFFF',
-        fontSize: 18,
-        fontWeight: '500',
-        lineHeight: 20.34,
-        margin: 0,
-        fontFamily: 'Inter-Black',
-    }
-});
+const HeaderTextStyle = styled(Text, {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '500',
+    lineHeight: 20.34,
+    margin: 0,
+})
+
+const HeaderAvatarStyle = styled(Image, {
+    width: 2,
+    height: 2,
+    borderRadius: 100,
+})
+
+const HeaderStyle = styled(View, {
+    flex: 1,
+    paddingTop: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 18
+})

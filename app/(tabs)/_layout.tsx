@@ -7,6 +7,7 @@ import User from "@/app/api/schema"
 import LoaderImg from '@/components/Loader/LoaderImg';
 import Erorr from '@/components/Error'
 import Header from '../../components/Header';
+import { useMutation } from '../api/hooks/useMutation';
 
 type PropsContextType = {
   startFarmDate?: number,
@@ -75,23 +76,22 @@ export default function TabLayout() {
                   options={{
                     title: 'Farm',
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/homeIcon.svg')} />,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('@/assets/images/icons/homeIcon.svg')} />,
                   }}
                 />
                 <Tabs.Screen
                   name="friends"
                   options={{
                     title: 'Friends',
-                    tabBarAllowFontScaling: true,
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/friendsIcon.svg')} />,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('@/assets/images/icons/friendsIcon.svg')} />,
                   }} />
                 <Tabs.Screen
                   name="tasks"
                   options={{
                     title: 'Поле наград',
                     headerShown: false,
-                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/tasksIcon.svg')} />,
+                    tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('@/assets/images/icons/tasksIcon.svg')} />,
                   }} />
 
                 <Tabs.Screen
