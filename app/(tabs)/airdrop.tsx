@@ -6,7 +6,7 @@ import Loader from '@/components/Loader';
 import TaskComponent from "@/components/Tasks/Task"
 import MainButton from '@/components/Buttons/MainButton';
 import { Button } from 'tamagui';
-import MainButtonContent from "@/components/MainButtonContent"
+import MainButtonContent from "@/components/Buttons/ButtonContent/MainButtonContent"
 
 export default function AirDropTab() {
     return (

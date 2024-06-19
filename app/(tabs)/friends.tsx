@@ -5,6 +5,7 @@ import { Referrals } from "@/app/api/schema"
 import { useQuery } from '../api/hooks/useQuery';
 import Loader from '@/components/Loader';
 import Clipboard from '@react-native-clipboard/clipboard';
+import MainActionButton from '@/components/Buttons/MainButton'
 
 export default function FriendTab() {
   const WebApp = window.Telegram.WebApp;
@@ -47,9 +48,9 @@ export default function FriendTab() {
               </View>
             ))}
           </View>
-          <Button style={styles.button} onPress={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
+          <MainActionButton size={{ width: 350, height: 62 }} callback={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
             Invite a friends
-          </Button>
+          </MainActionButton>
         </>
       )}
     </View>

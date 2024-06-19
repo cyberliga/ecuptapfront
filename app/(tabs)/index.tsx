@@ -3,10 +3,11 @@ import { Text, Button, View, Image, styled } from 'tamagui'
 import { useCallback } from "react";
 import { useFonts } from 'expo-font';
 import { useMutation } from '../api/hooks/useMutation';
-import MainButtonContent from "@/components/MainButtonContent"
+import MainButtonContent from "@/components/Buttons/ButtonContent/MainButtonContent"
 import * as SplashScreen from 'expo-splash-screen';
 import { useProps } from './_layout';
 import ButtonLoader from '@/components/Loader/ButtonLoader';
+import MainActionButton from '@/components/Buttons/MainButton'
 
 
 const FarmTab: React.FC = () => {
@@ -45,11 +46,11 @@ const FarmTab: React.FC = () => {
         {money && new Intl.NumberFormat("en").format(money)}
       </MoneyTextStyled>
       <Image source={require("@/assets/images/icons/EcupLogo.svg")} />
-      <FarmButtomStyled onPress={handleClaimClick}>
+      <MainActionButton size={{ width: 350, height: 62 }} callback={handleClaimClick}>
         {loading ? <ButtonLoader /> : (
           <MainButtonContent finishDate={finishdate} startFarmDate={startFarmDate} ratePerHour={ratePerHour} />
         )}
-      </FarmButtomStyled>
+      </MainActionButton>
     </View>
   );
 }

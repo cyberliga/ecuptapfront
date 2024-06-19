@@ -1,5 +1,5 @@
-import { Text, StyleSheet, Image } from "react-native"
-import { Button } from "tamagui"
+import { Button, styled } from "tamagui"
+import { ReactNode } from "react"
 
 interface ButtonSize {
     height: number
@@ -8,49 +8,24 @@ interface ButtonSize {
 
 type ButtonProps = {
     size: ButtonSize,
-    callback: () => void,
+    callback?: () => void,
+    children?: ReactNode,
 }
 
-export default function MainButton(props: ButtonProps) {
-    styles.button.width = props.size.width
-    styles.button.height = props.size.height
-
+export default function MainActionButton({ size, callback, children }: ButtonProps) {
     return (
-        <Button style={styles.button} onPress={props.callback}></Button>
+        <MainActionButtonStyle width={size.width} height={size.height} onPress={callback}>
+            {children}
+        </MainActionButtonStyle>
     )
 }
 
-const styles = StyleSheet.create({
-    button: {
-        padding: 0,
-        margin: 10,
-        width: 350,
-        height: 62,
-        borderRadius: 10,
-        borderWidth: 0,
-        cursor: "pointer",
-        opacity: 0.8,
-        backgroundColor: "#BFFF97",
-    },
-    button_image: {
-        padding: 0,
-        margin: 10,
-        width: 350,
-        height: 62,
-        borderRadius: 10,
-        borderWidth: 0,
-        cursor: "pointer",
-        opacity: 0.8,
-        backgroundColor: "#BFFF97",
-    },
-    button_text: {
-        display: 'flex',
-        alignItems: 'center',
-        gap: 5,
-        color: "#1C4532",
-        fontSize: 18,
-        fontWeight: 600,
-        fontFamily: "Inter-Black",
-        lineHeight: 27
-    }
-});
+const MainActionButtonStyle = styled(Button, {
+    padding: 0,
+    margin: 10,
+    borderRadius: "$5",
+    borderWidth: 0,
+    cursor: "pointer",
+    opacity: 0.8,
+    backgroundColor: "$mainButton",
+})

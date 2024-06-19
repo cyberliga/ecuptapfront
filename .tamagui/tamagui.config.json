@@ -39455,6 +39455,13 @@
           "name": "color-225",
           "val": "#4EF2FF",
           "variable": ""
+        },
+        "mainButtomText": {
+          "isVar": true,
+          "key": "$mainButtomText",
+          "name": "color-226",
+          "val": "#141414",
+          "variable": ""
         }
       }
     },
@@ -41875,6 +41882,13 @@
         "key": "$mainButton",
         "name": "color-225",
         "val": "#4EF2FF",
+        "variable": ""
+      },
+      "$color.mainButtomText": {
+        "isVar": true,
+        "key": "$mainButtomText",
+        "name": "color-226",
+        "val": "#141414",
         "variable": ""
       }
     }
