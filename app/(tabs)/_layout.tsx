@@ -56,7 +56,7 @@ export default function TabLayout() {
     <>
       {false ? (
         <View style={styles.loaderContainer}>
-          {/* <LoaderImg /> */}
+          <LoaderImg />
         </View>
       ) : isError ? <Erorr />
         : showCarousel ? (
@@ -98,7 +98,6 @@ export default function TabLayout() {
                   name="airdrop"
                   options={{
                     title: 'Airdrop',
-                    tabBarAllowFontScaling: true,
                     headerShown: false,
                     tabBarIcon: ({ color }) => <Image style={{ tintColor: color }} source={require('../../assets/images/icons/airdropIcon.svg')} />,
                   }} />

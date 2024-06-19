@@ -37333,6 +37333,13 @@
           "name": "size-13",
           "val": 48,
           "variable": ""
+        },
+        "mainButtonSize": {
+          "isVar": true,
+          "key": "$mainButtonSize",
+          "name": "size-30",
+          "val": 350,
+          "variable": ""
         }
       },
       "radius": {
@@ -39448,19 +39455,81 @@
           "name": "color-224",
           "val": "hsl(53, 100%, 91.0%)",
           "variable": ""
-        },
-        "mainButton": {
+        }
+      },
+      "actionButton": {
+        "backgroundColor": {
           "isVar": true,
-          "key": "$mainButton",
-          "name": "color-225",
+          "key": "$backgroundColor",
+          "name": "1022398728-1",
           "val": "#4EF2FF",
           "variable": ""
         },
-        "mainButtomText": {
+        "textColor": {
           "isVar": true,
-          "key": "$mainButtomText",
-          "name": "color-226",
+          "key": "$textColor",
+          "name": "1022398728-2",
           "val": "#141414",
+          "variable": ""
+        },
+        "borderRadius": {
+          "isVar": true,
+          "key": "$borderRadius",
+          "name": "1022398728-3",
+          "val": 7,
+          "variable": ""
+        }
+      },
+      "nonActionButton": {
+        "backgroundColor": {
+          "isVar": true,
+          "key": "$backgroundColor",
+          "name": "1316668533-1",
+          "val": "#171C26",
+          "variable": ""
+        },
+        "textColor": {
+          "isVar": true,
+          "key": "$textColor",
+          "name": "1316668533-2",
+          "val": "#FFFFFF",
+          "variable": ""
+        },
+        "borderColor": {
+          "isVar": true,
+          "key": "$borderColor",
+          "name": "1316668533-3",
+          "val": "#FFFFFF",
+          "variable": ""
+        },
+        "borderRadius": {
+          "isVar": true,
+          "key": "$borderRadius",
+          "name": "1316668533-4",
+          "val": "$5",
+          "variable": ""
+        }
+      },
+      "icon": {
+        "small": {
+          "isVar": true,
+          "key": "$small",
+          "name": "icon-1",
+          "val": 16,
+          "variable": ""
+        },
+        "medium": {
+          "isVar": true,
+          "key": "$medium",
+          "name": "icon-2",
+          "val": 24,
+          "variable": ""
+        },
+        "large": {
+          "isVar": true,
+          "key": "$large",
+          "name": "icon-3",
+          "val": 32,
           "variable": ""
         }
       }
@@ -39768,6 +39837,13 @@
         "key": "$4.5",
         "name": "size-13",
         "val": 48,
+        "variable": ""
+      },
+      "$size.mainButtonSize": {
+        "isVar": true,
+        "key": "$mainButtonSize",
+        "name": "size-30",
+        "val": 350,
         "variable": ""
       },
       "$radius.0": {
@@ -41877,18 +41953,74 @@
         "val": "hsl(53, 100%, 91.0%)",
         "variable": ""
       },
-      "$color.mainButton": {
+      "$actionButton.backgroundColor": {
         "isVar": true,
-        "key": "$mainButton",
-        "name": "color-225",
+        "key": "$backgroundColor",
+        "name": "1022398728-1",
         "val": "#4EF2FF",
         "variable": ""
       },
-      "$color.mainButtomText": {
+      "$actionButton.textColor": {
         "isVar": true,
-        "key": "$mainButtomText",
-        "name": "color-226",
+        "key": "$textColor",
+        "name": "1022398728-2",
         "val": "#141414",
+        "variable": ""
+      },
+      "$actionButton.borderRadius": {
+        "isVar": true,
+        "key": "$borderRadius",
+        "name": "1022398728-3",
+        "val": 7,
+        "variable": ""
+      },
+      "$nonActionButton.backgroundColor": {
+        "isVar": true,
+        "key": "$backgroundColor",
+        "name": "1316668533-1",
+        "val": "#171C26",
+        "variable": ""
+      },
+      "$nonActionButton.textColor": {
+        "isVar": true,
+        "key": "$textColor",
+        "name": "1316668533-2",
+        "val": "#FFFFFF",
+        "variable": ""
+      },
+      "$nonActionButton.borderColor": {
+        "isVar": true,
+        "key": "$borderColor",
+        "name": "1316668533-3",
+        "val": "#FFFFFF",
+        "variable": ""
+      },
+      "$nonActionButton.borderRadius": {
+        "isVar": true,
+        "key": "$borderRadius",
+        "name": "1316668533-4",
+        "val": "$5",
+        "variable": ""
+      },
+      "$icon.small": {
+        "isVar": true,
+        "key": "$small",
+        "name": "icon-1",
+        "val": 16,
+        "variable": ""
+      },
+      "$icon.medium": {
+        "isVar": true,
+        "key": "$medium",
+        "name": "icon-2",
+        "val": 24,
+        "variable": ""
+      },
+      "$icon.large": {
+        "isVar": true,
+        "key": "$large",
+        "name": "icon-3",
+        "val": 32,
         "variable": ""
       }
     }

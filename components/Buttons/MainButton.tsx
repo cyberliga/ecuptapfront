@@ -16,7 +16,7 @@ const CONFIG_ATTRIBUT_NAME = "$actionButton"
 
 export default function MainActionButton({ size, callback, children }: ButtonProps) {
     return (
-        <MainActionButtonStyle width={"$0"} height={size.height} onPress={callback}>
+        <MainActionButtonStyle width={size.width} height={size.height} onPress={callback}>
             {children}
         </MainActionButtonStyle>
     )
