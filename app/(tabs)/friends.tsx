@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image, Alert } from 'react-native';
+import { View, StyleSheet, Image, ScrollView } from 'react-native';
 import { Text } from 'tamagui'
 import { Referrals } from "@/app/api/schema"
 import { useQuery } from '../api/hooks/useQuery';
@@ -27,26 +27,28 @@ export default function FriendTab() {
           <Text style={styles.subTitle}>
             Invite friends to earn more coins
           </Text>
-          <View style={styles.usersWrapper}>
-            {data?.referrals?.map((item, index) => (
-              <View style={styles.userContainer} key={index} >
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                  <Image style={{ height: 32, width: 32, borderRadius: 96 }}
-                    source={require('@/assets/images/avatars/1.webp')} />
-                  <Text style={styles.text}>
-                    {item.username}
-                  </Text>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.usersWrapper}>
+              {data?.referrals?.map((item, index) => (
+                <View style={styles.userContainer} key={index} >
+                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                    <Image style={{ height: 32, width: 32, borderRadius: 96 }}
+                      source={require('@/assets/images/avatars/1.webp')} />
+                    <Text style={styles.text}>
+                      {item.username}
+                    </Text>
+                  </View>
+                  <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                    <Image source={require('@/assets/images/icons/colorEcoinsIcon.svg')}
+                      style={{ height: 15, width: 10 }} />
+                    <Text style={styles.text}>
+                      {item.reward}
+                    </Text>
+                  </View>
                 </View>
-                <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                  <Image source={require('@/assets/images/icons/colorEcoinsIcon.svg')}
-                    style={{ height: 15, width: 10 }} />
-                  <Text style={styles.text}>
-                    {item.reward}
-                  </Text>
-                </View>
-              </View>
-            ))}
+              ))}
           </View>
+          </ScrollView>
           <MainActionButton size={{ width: "$mainButtonSize", height: "$62" }} callback={() => copyToClipboard(`t.me/ecuplocal/start=${tg_user_id}`)}>
             Invite a friends
           </MainActionButton>

@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text } from 'tamagui'
 import { useQuery } from '../api/hooks/useQuery';
 import { Tasks } from '@/app/api/schema'
@@ -21,13 +21,13 @@ export default function TasksTab() {
                 Earn more coins by doing tasks
             </Text>
             {isLoading ? <Loader /> : (
-                <>
+                <ScrollView showsVerticalScrollIndicator={false}>
                     <View style={styles.tasksWrapper}>
-                        {data?.tasks?.map((item, index) => (
-                            <TaskComponent key={index} task={item} tgUserId={tgUserId} tgUserLanguage={tguserLanguage} />
-                        ))}
+                            {data?.tasks?.map((item, index) => (
+                                <TaskComponent key={index} task={item} tgUserId={tgUserId} tgUserLanguage={tguserLanguage} />
+                         ))}
                     </View>
-                </>
+                </ScrollView>
             )}
         </View>
     );
