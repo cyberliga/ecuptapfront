@@ -8,9 +8,10 @@ type TimerProps = {
     ratePerHour: number,
 }
 
-export default function MainButtonContent({ finishDate, startFarmDate, ratePerHour }: TimerProps) {
-    const [date, setDate] = useState("")
-    const [score, setScore] = useState(0)
+export const MainButtonContent = ({ finishDate, startFarmDate, ratePerHour }: TimerProps) => {
+    const [date, setDate] = useState<string>("");
+    const [score, setScore] = useState<number>(0);
+
     useEffect(() => {
         let remainingSeconds = secondsForFarm(finishDate);
         const interval = setInterval(() => {
@@ -27,11 +28,11 @@ export default function MainButtonContent({ finishDate, startFarmDate, ratePerHo
 
     const getMaxTotalFarmValue = () => {
         return Math.round((((finishDate - startFarmDate)) * ratePerHour / 60 / 60))
-    }
+    };
 
     const getTotalFarmValue = () => {
         return Math.round((((new Date().getTime() / 1000 - startFarmDate)) * ratePerHour / 60 / 60))
-    }
+    };
 
     const formatTime = (seconds: number) => {
         const hours = Math.floor(seconds / 3600);
@@ -42,7 +43,7 @@ export default function MainButtonContent({ finishDate, startFarmDate, ratePerHo
         setDate(formattedTime)
         setScore(getTotalFarmValue)
         return formattedTime;
-    }
+    };
 
     return (
         <>
@@ -57,7 +58,7 @@ export default function MainButtonContent({ finishDate, startFarmDate, ratePerHo
             </ClaimTextStyled>
         </>
     )
-}
+};
 
 const TimerTextStyled = styled(Text, {
     fontSize: 14,

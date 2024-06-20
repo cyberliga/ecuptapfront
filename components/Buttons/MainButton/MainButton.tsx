@@ -1,11 +1,10 @@
-import { Button, styled , getTokens} from "tamagui"
+import { Button, styled} from "tamagui"
 import { ReactNode } from "react"
 
 type ButtonSize = {
     height: string
     width: string
 }
-
 type ButtonProps = {
     size: ButtonSize,
     callback?: () => void,
@@ -14,7 +13,7 @@ type ButtonProps = {
 
 const CONFIG_ATTRIBUT_NAME = "$actionButton"
 
-export default function MainActionButton({ size, callback, children }: ButtonProps) {
+export const MainActionButton = ({ size, callback, children }: ButtonProps) => {
     return (
         <MainActionButtonStyle width={size.width} height={size.height} onPress={callback}>
             {children}

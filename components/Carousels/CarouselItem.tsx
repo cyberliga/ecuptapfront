@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useMutation } from '@/app/api/hooks/useMutation';
-import ButtonLoader from '../Loader/ButtonLoader';
+import { ButtonLoader } from '../Loaders';
 
 type slideTypes = {
   title: string;
@@ -10,7 +10,6 @@ type slideTypes = {
   image: any;
   index: number;
 }
-
 type CarouselItemProps = {
   item: slideTypes,
   setActiveSlide: React.Dispatch<React.SetStateAction<number>>,

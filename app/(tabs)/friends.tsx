@@ -2,9 +2,9 @@ import { View, StyleSheet, Image, Alert } from 'react-native';
 import { Text } from 'tamagui'
 import { Referrals } from "@/app/api/schema"
 import { useQuery } from '../api/hooks/useQuery';
-import Loader from '@/components/Loader';
+import { Loader } from '@/components/Loaders';
 import Clipboard from '@react-native-clipboard/clipboard';
-import MainActionButton from '@/components/Buttons/MainButton'
+import { MainActionButton } from '@/components/Buttons';
 
 export default function FriendTab() {
   const WebApp = window.Telegram.WebApp;

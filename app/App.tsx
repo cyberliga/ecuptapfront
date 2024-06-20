@@ -1,7 +1,7 @@
 import 'expo-dev-client';
 import '@tamagui/core/reset.css'
 import { TamaguiProvider } from 'tamagui'
-import tamaguiConfig from '../tamagui.config'
+import tamaguiConfig from '@/tamagui.config';
 import { QueryProvider } from './api/hooks/QueryProvider';
 
 export default function App() {

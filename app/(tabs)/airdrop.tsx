@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { RoadMap } from '@/components/RoadMap';
 
 export default function AirDropTab() {
-    const [showTab , setShowTab] =  useState(false);
+    const [showTab , setShowTab] =  useState<boolean>(false);
     const data = [
         {
             title: 'Our Roadmap',
@@ -17,7 +17,7 @@ export default function AirDropTab() {
     const setCloseTab = () => {
         setShowTab(false);
     }
-    console.log(showTab)
+ 
     return !showTab ? (
         <View style={styles.container}>
             <Text style={styles.title}>

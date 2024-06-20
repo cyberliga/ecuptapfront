@@ -1,6 +1,6 @@
 import { UIActivityIndicator } from 'react-native-indicators';
 
-const Loader = ({ size, color }: { size?: number, color?: string }) => {
+export const Loader = ({ size, color }: { size?: number, color?: string }) => {
   return (
     <>
       <UIActivityIndicator color={color ? color : '#4EF2FF'} size={size ? size : 50} style={{ zIndex: 2 }}
@@ -8,5 +8,3 @@ const Loader = ({ size, color }: { size?: number, color?: string }) => {
     </>
   );
 };
-
-export default Loader;

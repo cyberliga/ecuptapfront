@@ -4,17 +4,15 @@ import { useCallback } from "react";
 import { useFonts } from 'expo-font';
 import { useMutation } from '../api/hooks/useMutation';
 import { useProps } from './_layout';
-import Header from '@/components/Header';
-import MainButtonContent from "@/components/Buttons/ButtonContent/MainButtonContent"
+import { Header } from '@/components/Header';
+import { MainButtonContent, MainActionButton} from '@/components/Buttons';
+import { ButtonLoader } from '@/components/Loaders';
 import * as SplashScreen from 'expo-splash-screen';
-import ButtonLoader from '@/components/Loader/ButtonLoader';
-import MainActionButton from '@/components/Buttons/MainButton'
 
-const FarmTab: React.FC = () => {
+const FarmTab = () => {
   require('@/assets/js/telegram-web-app')
   const WebApp = window.Telegram?.WebApp;
-  const { startFarmDate, ratePerHour, money, finishdate
-  } = useProps();
+  const { startFarmDate, ratePerHour, money, finishdate} = useProps();
   const tgUser = WebApp?.initDataUnsafe?.user;
   const tgUserId = tgUser ? tgUser.id : 412037449;
 
@@ -43,7 +41,7 @@ const FarmTab: React.FC = () => {
     <View onLayout={onLayoutRootView} style={styles.container}>
       <Header />
       <MoneyTextStyled>
-        <Image source={require("../../assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
+        <Image source={require("@/assets/images/icons/colorEcoinsIcon.svg")} style={{ width: 17.5, height: 26.9, marginRight: 10, marginTop: 2 }} />
         {money && new Intl.NumberFormat("en").format(money)}
       </MoneyTextStyled>
       <Image source={require("@/assets/images/icons/EcupLogo.svg")} />

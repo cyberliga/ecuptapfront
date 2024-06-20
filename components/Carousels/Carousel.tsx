@@ -1,7 +1,6 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
+import React, { Dispatch, useState } from 'react';
+import { View} from 'react-native';
 import { CarouselItem } from './CarouselItem';
-
 
 type slideTypes = {
   title: string;
@@ -10,7 +9,6 @@ type slideTypes = {
   image: any;
   index: number;
 }
-
 type CarouselProps = {
   setShowCarousel: Dispatch<React.SetStateAction<boolean>>,
 }
@@ -54,7 +52,7 @@ const slides: slideTypes[] = [
 ];
 
 const Carousel = ({ setShowCarousel }: CarouselProps) => {
-  const [activeSlide, setActiveSlide] = useState(0)
+  const [activeSlide, setActiveSlide] = useState<number>(0)
   return (
     <View style={{height: '100%', backgroundColor: '#171923'}}>
       <CarouselItem item={slides[activeSlide]} setActiveSlide={setActiveSlide} setShowCarousel={setShowCarousel} />

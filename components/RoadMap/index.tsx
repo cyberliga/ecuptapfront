@@ -1,3 +1,3 @@
-import RoadMap from "./RoadMap";
+import { RoadMap } from "./RoadMap";
 
-export {RoadMap};
+export { RoadMap };

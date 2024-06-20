@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { useColorScheme } from 'react-native';
 import { TamaguiProvider } from 'tamagui';
 import { QueryProvider } from './api/hooks/QueryProvider';
-import tamaguiConfig from '../tamagui.config';
+import tamaguiConfig from '@/tamagui.config';
 
 export default function Layout() {
   const colorScheme = useColorScheme()

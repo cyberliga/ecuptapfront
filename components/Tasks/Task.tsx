@@ -1,13 +1,9 @@
 import { View, Text, StyleSheet, Image, Alert, Linking } from 'react-native';
 import { useCallback, useState } from 'react'
-import { baseUrl } from "@/app/api/hooks/utils";
-import { Button } from 'tamagui';
-import { Tasks, Task } from '@/app/api/schema'
-import Loader from '@/components/Loader';
+import { Task } from '@/app/api/schema'
+import { Loader } from '../Loaders';
 import { useMutation } from '@/app/api/hooks/useMutation';
-import MainActionButton from '@/components/Buttons/MainButton'
-
-import NonActionButton from "@/components/Buttons/NonActionButton"
+import { MainActionButton, NonActionButton } from '../Buttons';
 import { ReactNode } from "react"
 
 type OpenURLButtonProps = {
@@ -24,9 +20,9 @@ enum TaskStatus {
     DONE = "DONE"
 }
 
-export default function TaskComponent({ tgUserLanguage, tgUserId, task }: TaskProps) {
+export const TaskComponent = ({ tgUserLanguage, tgUserId, task }: TaskProps) =>{
     const webApp = window.Telegram?.WebApp
-    const [taskStatus, setTaskStatus] = useState(task.status)
+    const [taskStatus, setTaskStatus] = useState<string>(task.status)
 
     const { mutate: taskStart, loading: taskIsLoading } = useMutation<any>({
         path: `/users/${tgUserId}/tasks/${task.task.sort}/start`, method: "POST", queryKeyRefetch: [

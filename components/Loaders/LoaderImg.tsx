@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Image } from "react-native";
-import { manipulateAsync, SaveFormat, ImageResult } from 'expo-image-manipulator';
+import { manipulateAsync, ImageResult } from 'expo-image-manipulator';
 import { Asset } from 'expo-asset';
 import { UIActivityIndicator } from 'react-native-indicators';
 
-const LoaderImg = () => {
+export const LoaderImg = () => {
   const originalFile = "@/assets/images/preloader.webp"
   const [image, setImage] = useState<ImageResult>();
 
@@ -39,5 +39,3 @@ const styles = StyleSheet.create({
     maxHeight: 812,
   }
 });
-
-export default LoaderImg;

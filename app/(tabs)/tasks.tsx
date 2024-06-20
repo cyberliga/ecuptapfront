@@ -2,8 +2,8 @@ import { View, StyleSheet } from 'react-native';
 import { Text } from 'tamagui'
 import { useQuery } from '../api/hooks/useQuery';
 import { Tasks } from '@/app/api/schema'
-import Loader from '@/components/Loader';
-import TaskComponent from "@/components/Tasks/Task"
+import { Loader } from '@/components/Loaders';
+import { TaskComponent } from '@/components/Tasks/Task';
 
 export default function TasksTab() {
     const webApp = window.Telegram?.WebApp

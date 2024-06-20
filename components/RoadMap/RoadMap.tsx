@@ -10,7 +10,7 @@ type dataTypes = {
   descr: string,
 }
 
-const RoadMap = ({setCloseTab}: RoadMapProps )=> {
+export const RoadMap = ({setCloseTab}: RoadMapProps )=> {
   const data: dataTypes[] = [
     {
       month: 'May',
@@ -31,15 +31,18 @@ const RoadMap = ({setCloseTab}: RoadMapProps )=> {
   ]
   return (
     <View style={styles.roadmapWrapper}>
-        <Text style={styles.roadmapTitle}>
-            Roadmap
-        </Text>
-        <Button onPress={setCloseTab} style={styles.roadmapButton}>
-          <X color='#FFFFFF' />
-        </Button>
+        <View  style={styles.roadmapBorder} />
+        <View style={styles.roadmapDescrWrapper} >
+          <Text style={styles.roadmapTitle}>
+              Roadmap
+          </Text>
+          <Button onPress={setCloseTab} style={styles.roadmapButton}>
+            <X color='#FFFFFF' />
+          </Button>
+        </View>
       
-      {data.map((item) => (
-        <View style={styles.roadmapItemWrapper} >
+      {data.map((item, index) => (
+        <View style={styles.roadmapItemWrapper} key={index}>
           <Text style={styles.roadmapMonth}>
               {item.month}
           </Text>
@@ -58,16 +61,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#171C26',
     display: 'flex',
     flexDirection: 'column',
-    gap: 20,
+    alignItems: 'center',
     padding: 20,
-    // borderTopWidth: 1, 
-    // borderTopColor: '#C2C2C2', 
+    paddingTop: 30,
   },
   roadmapButton: {
+    position: 'absolute',
+    right: 10,
+    top: -10,
     backgroundColor: '#171C26',
     width: 30,
     height: 30,
     padding: 0,
+  },
+  roadmapBorder: {
+    width: '100%',
+    height: 30,
+    borderTopWidth: 1, 
+    borderTopColor: '#C2C2C2',
+    borderRadius: 90,
   },
   roadmapTitle: {
     color: '#FFFFFF',
@@ -76,10 +88,20 @@ const styles = StyleSheet.create({
     lineHeight: 27.12,
     fontFamily: 'Inter',
   },
+  roadmapDescrWrapper: {
+    marginBottom: 20,
+    position: 'relative',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+  },
   roadmapItemWrapper : {
     display: 'flex',
     flexDirection: 'column',
     gap: 10,
+    marginBottom: 15,
   },
   roadmapMonth: {
     color: '#FFFFFF',
@@ -96,5 +118,3 @@ const styles = StyleSheet.create({
     fontFamily: 'Inter',
   }
 });
-
-export default RoadMap;

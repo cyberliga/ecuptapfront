@@ -3,45 +3,48 @@ import { StyleSheet, Image } from "react-native"
 import { Text } from 'tamagui'
 import { getQuery } from '@/app/api/hooks/useQuery';
 import { claimedTotalCurrent, } from '@/app/api/utils'
-
+import { MainActionButton } from '../MainButton';
 import User from "@/app/api/schema"
-import MainButton from './MainButton'
 
-export default function FarmButton() {
+export const FarmButton = () =>  {
     require('@/assets/js/telegram-web-app')
 
     const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
     const tg_user_id = tg_user ? tg_user.id : 412037449;
-    const [finishdate, setFinishDate] = useState(0);
-    const [startFarmDate, setStartFarmDate] = useState(0);
-    const [money, setMoney] = useState(0);
-    const [ratePerHour, setRatePerHour] = useState(0);
+    const [finishdate, setFinishDate] = useState<number>(0);
+    const [startFarmDate, setStartFarmDate] = useState<number>(0);
+    const [money, setMoney] = useState<number>(0);
+    const [ratePerHour, setRatePerHour] = useState<number>(0);
 
     const handleClaimClick = async () => {
-        const response = getQuery<User>({ path: `/users/${tg_user_id}/claim-farmed-coins` });
+        const response = getQuery<User>(`/users/${tg_user_id}/claim-farmed-coins`);
 
         response.then((res: User) => {
-            setStartFarmDate(res.farm_start)
-            setFinishDate(res.farm_finish)
+            setStartFarmDate(res.farm_start);
+            setFinishDate(res.farm_finish);
             setMoney(res.total_coins);
         })
     }
-    const claimedTotal = claimedTotalCurrent(startFarmDate, ratePerHour)
+    const claimedTotal = claimedTotalCurrent(startFarmDate, ratePerHour);
 
     // Не знаю как в таком случае обновлять money. Потому тут нет смысла обновлять, на главном компоненте ничего не меняется
     // Также нужно текст передавать в MainButton, а не ниже его делать
 
+    const MainButtonSize = {
+        width: String(styles.button.width), 
+        height: String(styles.button.height) 
+    };
     return (
         <>
-            <MainButton size={{ width: styles.button.width, height: styles.button.height }} callback={handleClaimClick} />
+            <MainActionButton size={MainButtonSize} callback={handleClaimClick} />
             <Text style={styles.button_text}> Farming  <Image style={{ height: 15, width: 10, marginLeft: 5 }}
-                source={require("../../assets/images/icons/EcoinsIcon.svg")} />
+                source={require("@/assets/images/icons/EcoinsIcon.svg")} />
                 {claimedTotal}
             </Text>
         </>
 
     )
-}
+};
 
 const styles = StyleSheet.create({
     button: {

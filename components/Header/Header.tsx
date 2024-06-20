@@ -1,7 +1,7 @@
 import { Text, View, Image, styled } from 'tamagui'
 import { useFonts } from 'expo-font';
 
-export default function Header() {
+export const Header = () => {
     require('@/assets/js/telegram-web-app')
     const [fontsLoaded, fontError] = useFonts({
         'Inter-Black': require('@/assets/fonts/Inter-Bold.ttf'),

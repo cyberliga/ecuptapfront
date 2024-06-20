@@ -4,9 +4,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery } from '../api/hooks/useQuery';
 import Carousel from '@/components/Carousels/index';
 import User from "@/app/api/schema"
-import LoaderImg from '@/components/Loader/LoaderImg';
-import Erorr from '@/components/Error'
-import Header from '../../components/Header';
+import { LoaderImg } from '@/components/Loaders';
+import { Erorr } from '@/components/Error';
 
 type PropsContextType = {
   startFarmDate?: number,
