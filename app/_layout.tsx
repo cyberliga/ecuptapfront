@@ -7,11 +7,6 @@ import tamaguiConfig from '@/tamagui.config';
 
 export default function Layout() {
   const colorScheme = useColorScheme()
-
-  require('@/assets/js/telegram-web-app')
-  const WebApp = window.Telegram?.WebApp;
-  WebApp?.expand();
-
   return (
     <QueryProvider >
       <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>

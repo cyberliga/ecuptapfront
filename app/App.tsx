@@ -5,10 +5,14 @@ import tamaguiConfig from '@/tamagui.config';
 import { QueryProvider } from './api/hooks/QueryProvider';
 
 export default function App() {
+  require('@/assets/js/telegram-web-app');
+  const WebApp = window.Telegram?.WebApp;
+  WebApp?.expand();
+
   return (
     <TamaguiProvider config={tamaguiConfig}>
       <QueryProvider></QueryProvider>
-    </TamaguiProvider >
+    </TamaguiProvider>
   )
 }
 

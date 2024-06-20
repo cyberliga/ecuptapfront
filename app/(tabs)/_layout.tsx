@@ -2,10 +2,10 @@ import { Tabs } from 'expo-router';
 import { StyleSheet, Image, View } from "react-native";
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useQuery } from '../api/hooks/useQuery';
-import Carousel from '@/components/Carousels/index';
-import User from "@/app/api/schema"
 import { LoaderImg } from '@/components/Loaders';
 import { Erorr } from '@/components/Error';
+import Carousel from '@/components/Carousels/index';
+import User from "@/app/api/schema";
 
 type PropsContextType = {
   startFarmDate?: number,
@@ -27,36 +27,36 @@ export default function TabLayout() {
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
   const { data, isLoading, error: isError } = useQuery<User>(`/users/${tg_user_id}`);
-  const [showLoader, setShowLoader] = useState(false);
-  const [showCarousel, setShowCarousel] = useState<boolean>(!!data?.is_onboarded); // TODO почему то !data?.is_onboarder возвращает тру, а должно фолс
+  const [showLoader, setShowLoader] = useState<boolean>(false);
+  const [showCarousel, setShowCarousel] = useState<boolean>(false);
 
   useEffect(() => {
     if (isLoading) {
       const toRef = setTimeout(() => {
         setShowLoader(true);
         clearTimeout(toRef);
-        // it is good practice to clear the timeout (but I am not sure why)
       }, 0);
     }
   }, [isLoading]);
 
   useEffect(() => {
-    if (showLoader) {
+    if (showLoader && data) {
+      setShowLoader(!data?.is_onboarded);
       const toRef = setTimeout(() => {
         setShowLoader(false);
         clearTimeout(toRef);
-      }, 4000);
+      }, 2000);
     }
-  }, [showLoader]);
+  }, [showLoader, data]);
 
   return (
     <>
-      {isLoading? (
+      {showLoader ? (
         <View style={styles.loaderContainer}>
           <LoaderImg />
         </View>
       ) : isError ? <Erorr />
-        : showCarousel ? (
+        : !data?.is_onboarded || showCarousel? (
           <Carousel setShowCarousel={setShowCarousel} />
         ) : (
           <>
@@ -64,9 +64,6 @@ export default function TabLayout() {
               startFarmDate: data?.farm_start, ratePerHour: data?.farm_coins_per_hour,
               money: data?.total_coins, finishdate: data?.farm_finish
             }}>
-              {/* <View style={styles.container}>
-                <Header />
-              </View> */}
               <Tabs screenOptions={{ tabBarActiveTintColor: '#4EF2FF', tabBarLabelStyle: { fontSize: 15 }, tabBarStyle: { height: 80, paddingBottom: 22, paddingTop: 14, backgroundColor: '#171C26' } }} >
                 <Tabs.Screen
                   name="index"

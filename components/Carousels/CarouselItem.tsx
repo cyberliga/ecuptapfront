@@ -20,7 +20,7 @@ export const CarouselItem: React.FC<CarouselItemProps> = ({ item, setActiveSlide
   require('@/assets/js/telegram-web-app');
   const tg_user = window.Telegram?.WebApp?.initDataUnsafe?.user;
   const tg_user_id = tg_user ? tg_user.id : 412037449;
-  const { mutate, loading } = useMutation({ path: `/users/${tg_user_id}/onboarded`, method: "GET", queryKeyRefetch: [
+  const { mutate, loading } = useMutation({ path: `/users/${tg_user_id}/onboarded`, method: "POST", queryKeyRefetch: [
     `/users/${tg_user_id}`,
   ] });
   const { title, subTitle, text, image, index } = item;
