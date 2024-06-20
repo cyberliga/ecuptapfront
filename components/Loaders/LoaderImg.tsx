@@ -15,7 +15,6 @@ export const LoaderImg = () => {
         const manipResult = await manipulateAsync(
           image.localUri || image.uri,
           [{ resize: { width: 375, height: 812 } }],
-          { compress: 0.5 }
         );
         setImage(manipResult);
       });
